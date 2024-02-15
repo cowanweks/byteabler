@@ -5,7 +5,7 @@ from sqlalchemy.orm import DeclarativeBase
 # postgres://cowanweks:ultimate@localhost:5432/timetabler
 
 # Setup the database uri
-flask_app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://cowanweks:ultimate@localhost:5432/timetabler"
+flask_app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://arekings:arekings@localhost/timetabler"
 
 
 class Base(DeclarativeBase):
