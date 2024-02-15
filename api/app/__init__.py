@@ -1,9 +1,12 @@
-from flask import Flask, render_template
+from .models import flask_app
+
+# Import Blueprints
+from .routes import user_route, role_route
+
+# Import Models
+from .models import Users
 
 
-flask_app = Flask(__name__, template_folder="../templates", static_folder="../static")
-
-@flask_app.route("/")
-def index():
-    return render_template("index.html")
-
+# Register blueprints
+flask_app.register_blueprint(user_route)
+flask_app.register_blueprint(role_route)
