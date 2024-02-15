@@ -1,21 +1,17 @@
 import json
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from bcrypt import hashpw, gensalt, checkpw
 from ..models import db, Users
 
 
 # A helper function that verifies user password against the hash
-def verify_hash(password: str, confirm_pwd):
-    # Generate a salt and encode the password
+def hash_password(password: str) -> any:
     salt = gensalt()
     pwd = password.encode()
 
-    # Check if passwords are same then Hash the password
-    if password == confirm_pwd:
-        hashed_pwd = hashpw(pwd, salt)
-        return hashed_pwd
-
-    return "[x] - Error, passwords dont match!", 201
+    # Hash the password
+    hashed_pwd = hashpw(pwd, salt)
+    return hashed_pwd
 
 
 # User blueprint
@@ -26,11 +22,10 @@ user_route = Blueprint('user_route', __name__, static_folder='../../static',
 # A route that handles fetching multiple user
 @user_route.route("/", methods=["GET"])
 def get_users():
-    users = []
     users = db.session.execute(
         db.select(Users).order_by(Users.username)).scalars().all()
 
-    return json.dumps(users), 200
+    return jsonify(users), 200
 
 
 # The route that handles fetching a specific user
@@ -54,10 +49,10 @@ def new_user():
         return "[x] - Passwords do not match!", 201
 
     db.session.add(
-        Users(staff_no=staff_no, username=username, role=role_name, password=verify_hash(password, confirm_password)))
+        Users(staff_no=staff_no, username=username, role=role_name, password=hash_password(password)))
     db.session.commit()
 
-    return "Successfully Created new User!"
+    return "Successfully Created new User!", 200
 
 
 # The Route that handles user information update

@@ -1,10 +1,19 @@
 import pytest
-from app import flask_app
+from app import create_app
+from app.extensions import db
+from app.flask_config import TestingConfig
 
 
 @pytest.fixture()
 def app():
-    yield flask_app
+    app = create_app()
+    app.config.from_object(TestingConfig)
+    db.init_app(app)
+
+    with app.app_context():
+        db.create_all()
+
+    yield app
 
 
 @pytest.fixture()
