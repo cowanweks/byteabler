@@ -1,5 +1,0 @@
-.env
-venv
-instance
-.pytest_cache
-__pycache__/

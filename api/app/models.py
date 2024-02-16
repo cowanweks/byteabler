@@ -24,6 +24,7 @@ class Users(db.Model):
 
 
 # Model Representing Staffs
+@dataclass
 class Staffs(db.Model):
     staff_no: Mapped[str] = mapped_column(db.String(25), primary_key=True)
     first_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
@@ -46,6 +47,7 @@ class Staffs(db.Model):
 
 
 # Model Representing Class Reps
+@dataclass
 class ClassReps(db.Model):
     reg_no: Mapped[str] = mapped_column(db.String(25), primary_key=True)
     first_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
@@ -68,6 +70,7 @@ class ClassReps(db.Model):
 
 
 # Model Representing Units
+@dataclass
 class Units(db.Model):
     unit_code: Mapped[str] = mapped_column(db.String(25), primary_key=True)
     unit_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
@@ -80,6 +83,7 @@ class Units(db.Model):
 
 
 # Model Representing Classes
+@dataclass
 class Classes(db.Model):
     class_id: Mapped[str] = mapped_column(db.String(25), primary_key=True)
     class_rep: Mapped[str] = mapped_column(db.String(25), nullable=False)
@@ -92,6 +96,7 @@ class Classes(db.Model):
 
 
 # Model Representing Roles available to registered users
+@dataclass
 class Roles(db.Model):
     role: Mapped[str] = mapped_column(db.String(25), primary_key=True)
 
