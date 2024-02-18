@@ -25,18 +25,10 @@ before_script:
   - virtualenv venv
   - source venv/bin/activate
 
-install:
-  script:
-    - pip install -r requirements.txt
-
-test:
-  script:
-    - pytest
-
 run:
   script:
-    - python3 run.py
-
+    - pip install -r requirements.txt
+    - pytest
 
 deploy:
   stage: deploy
