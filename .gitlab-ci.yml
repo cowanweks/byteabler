@@ -18,17 +18,9 @@ cache:
   paths:
     - .cache/pip
 
-before_script:
-  - cd api
-  - python --version ; pip --version  # For debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-
-test:
+run:
   script:
-    - pip install -r requirements.txt
-    - pytest
+    - ./deploy.sh
 
 deploy:
   stage: deploy
