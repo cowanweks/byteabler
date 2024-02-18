@@ -29,6 +29,8 @@ setup:
 
 test:
   script:
+    - cd api
+    - source venv/bin/activate
     - pytest
 
 deploy:
