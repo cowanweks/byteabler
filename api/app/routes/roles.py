@@ -1,7 +1,7 @@
 """
 
 """
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from bcrypt import hashpw, gensalt, checkpw
 from ..models import db, Roles
 
