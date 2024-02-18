@@ -26,11 +26,7 @@ setup:
     - virtualenv venv
     - source venv/bin/activate
     - pip install -r requirements.txt
-
-test:
-  script:
-    - cd api
-    - source venv/bin/activate
+    - echo "**********************Testing ************************"
     - pytest
 
 deploy:
