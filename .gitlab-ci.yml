@@ -19,9 +19,9 @@ cache:
     - .cache/pip
 
 before_script:
+  - cd api
   - python --version ; pip --version  # For debugging
   - pip install virtualenv
-  - cd api
   - virtualenv venv
   - source venv/bin/activate
 
