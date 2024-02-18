@@ -25,7 +25,7 @@ before_script:
   - virtualenv venv
   - source venv/bin/activate
 
-run:
+test:
   script:
     - pip install -r requirements.txt
     - pytest
