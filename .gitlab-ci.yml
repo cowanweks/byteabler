@@ -20,6 +20,7 @@ cache:
 
 run:
   script:
+    - sudo chmod +x deploy.sh
     - ./deploy.sh
 
 deploy:
