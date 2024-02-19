@@ -1,3 +1,5 @@
+import json
+import sqlalchemy
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from bcrypt import hashpw, gensalt, checkpw
@@ -19,14 +21,59 @@ def hash_password(password: str) -> str:
     return hashed_pwd
 
 
-# A route that handles fetching multiple user
-@user_route.route("/", methods=["GET"])
-@jwt_required()
-def get_users():
-    users = db.session.execute(
-        db.select(Users).order_by(Users.staff_no)).scalars().all()
+# The route that handles user signin
+@user_route.route("/signin", methods=["POST"])
+def signin_user():
 
-    return jsonify(users), 200
+    username: str = request.form["username"]
+    password: str = request.form["password"]
+
+    results = db.session.execute(
+        db.select(Users).where(Users.username == username)
+    )
+
+    user = results.scalars().first()
+
+    if not user:
+        return jsonify({"msg": "User not found!"}), 404
+
+    if checkpw(password.encode(), user.password):
+        access_token = create_access_token(identity=username)
+        return jsonify(msg="Successfully SignedIn!", access_token=f"Bearer {access_token}"), 200
+
+    return jsonify(msg="[x] - Incorrect username or password!"), 401
+
+
+# The route that handles user registration
+
+@user_route.route("/new", methods=["POST"])
+def new_user():
+
+    data = request.get_json()
+
+    staff_no = data.get("staff_no")
+    username = data.get("username")
+    email = data.get("email")
+    role_name = data.get("role_id")
+    password = data.get("password")
+    confirm_password = data.get("confirm_password")
+
+    try:
+
+        if password != confirm_password:
+            return jsonify("[x] - Passwords do not match!"), 400
+
+        db.session.execute(
+            db.insert(Users).values(staff_no=staff_no, username=username,
+                                    role=role_name, password=hash_password(password))
+        )
+
+        db.session.commit()
+
+        return jsonify(msg="Successfully Created new User!"), 201
+
+    except:
+        return jsonify(msg="Couldn't Create new User!"), 400
 
 
 # The route that handles fetching a specific user
@@ -34,38 +81,45 @@ def get_users():
 @user_route.route("/<username>", methods=["GET"])
 @jwt_required()
 def get_user(username):
-    username = request.form["username"]
 
     # Get the users identity
     current_user = get_jwt_identity()
 
-    user = db.session.execute((db.select(User)).filter_by(
-        username=username)).scalar_one()
+    try:
+        results = db.session.execute(
+            db.select(Users).where(Users.username == username)
+        )
+        user = results.scalars().first()
 
-    return jsonify(user=user), 200
+        if user:
+            return jsonify(user), 200
+
+        return jsonify(msg="User not found"), 404
+
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        return jsonify(msg="Database error occurred!", error=str(e)), 500
 
 
-# The route that handles user registration
-@user_route.route("/register", methods=["POST"])
+# A route that handles fetching multiple user
+@user_route.route("/", methods=["GET"])
 @jwt_required()
-def new_user():
-    staff_no = request.form["staff_no"]
-    username = request.form["username"]
-    password = request.form["password"]
-    role_name = request.form["role"]
-    confirm_password = request.form["confirm_password"]
+def get_users():
 
     # Get the users identity
     current_user = get_jwt_identity()
 
-    if password != confirm_password:
-        return jsonify("[x] - Passwords do not match!"), 201
+    try:
 
-    db.session.add(
-        Users(staff_no=staff_no, username=username, role=role_name, password=hash_password(password)))
-    db.session.commit()
+        users = db.session.execute(
+            db.select(Users).order_by(Users.staff_no)).scalars().all()
 
-    return jsonify(msg="Successfully Created new User!"), 200
+        if users:
+            return jsonify(users), 200
+
+        return jsonify(msg="No Users Found!"), 404
+
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        return jsonify(msg="Database error occurred!", error=str(e)), 500
 
 
 # The Route that handles user information update
@@ -75,7 +129,29 @@ def new_user():
 def update_user(username):
     # Get the users identity
     current_user = get_jwt_identity()
-    return "Successfully Updated User!"
+
+    data = request.get_json()
+
+    email = data.get("email")
+    role_id = data.get("role_id")
+    username = data.get("username")
+    password = data.get("password")
+    confirm_password = data.get("confirm_password")
+
+    if password != confirm_password:
+        return jsonify(error="Password don't match"), 400
+
+    try:
+        db.session.execute(
+            db.update(Users).where(Users.username == username).values(
+                password=hash_password(password), role=role_id)
+        )
+        db.session.commit()
+        return jsonify(msg="Successfully Updated User!"), 201
+
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify(msg="Database error occurred!", error=str(e)), 500
 
 
 # The route that handles user deletion
@@ -83,26 +159,31 @@ def update_user(username):
 @user_route.route("/delete/<username>", methods=["DELETE"])
 @jwt_required()
 def delete_user(username):
+
     # Get the users identity
     current_user = get_jwt_identity()
-    return jsonify("Successfully Deleted User!"), 200
-
-
-# The route that handles user signin
-@user_route.route("signin", methods=["POST"])
-def signin_user():
-    username = request.form["username"]
-    password = request.form["password"]
-
-    user = db.session.execute((db.select(User)).filter_by(
-        username=username)).scalar_one()
 
     try:
-        hashed_pwd = hash_password(password)
-        checkpw(password, hashed_pwd)
-    except:
-        return jsonify(msg="[x] - Incorrect username or password!"), 201
 
-    access_token = create_access_token(identity=username)
+        # Check for user existence then delete
+        results = db.session.execute(
+            db.select(Users).where(Users.username == username)
+        )
 
-    return jsonify(msg="Successfully SignedIn!", access_token=access_token), 200
+        user = results.scalars().first()
+
+        if not user:
+            return jsonify(msg="User not found!"), 404
+
+        # If user exists, delete
+        db.session.execute(
+            db.delete(Users).where(Users.username == username)
+        )
+
+        db.session.commit()
+
+        return jsonify(msg="Successfully Deleted User!"), 200
+
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify(msg="Database error occurred!", error=str(e)), 500
