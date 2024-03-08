@@ -6,8 +6,8 @@ from app.extensions import db, sess, jwt
 from app.flask_config import ProductionConfig, DevelopmentConfig
 
 
-# TODO  doc strings
-def main():
+# Application Entry
+if __name__ == '__main__':
 
     # Create the flask application
     flask_app = create_app()
@@ -27,8 +27,3 @@ def main():
 
     flask_app.run(host=flask_app.config.get('HOST'),
                   port=flask_app.config.get("PORT"))
-
-
-# Application Entry
-if __name__ == '__main__':
-    main()

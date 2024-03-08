@@ -1,8 +1,9 @@
 from flask import Flask, render_template
-from app.routes import user_route, role_route, unit_route, class_route, classrep_route
-from app.error_handlers import not_found
+from app.routes import user_route, role_route, unit_route, class_route, classrep_route  # Routes
+from app.error_handlers import not_found  # Error Handlers
 
 
+# Create application and return it.
 def create_app():
     app = Flask(__name__, static_folder="static",
                 template_folder="templates")
