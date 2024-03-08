@@ -1,12 +1,52 @@
-from tests.conftest import client, create_test_class
+import pytest
+from tests.conftest import client, signin_test_user
 
 
-def test_get_class(client, access_token, create_test_class):
+@pytest.fixture
+def create_test_class(client, signin_test_user):
 
-    class_data, _ = create_test_class
+    user_data, access_token, _ = signin_test_user
+
+    assert _ == 200
+    assert access_token is not None
+    assert user_data is not None
+
+    headers = {
+        "Content-Type": "application/json",
+        'Authorization': access_token
+    }
+
+    class_data = {
+        'class_id': 'btit-sep-2020',
+        'class_rep': 'BTIT/574J/2020'
+    }
+
+    response = client.post("/api/classes/new",
+                           headers=headers, json=class_data)
+
+    if response.status_code == 201:
+
+        return class_data, access_token, response.status_code
+
+    return None, access_token, response.status_code
+
+
+def test_create_class(client, create_test_class):
+
+    class_data, access_token, _ = create_test_class
 
     assert _ == 201
     assert class_data is not None
+    assert access_token is not None
+
+
+def test_get_class(client, create_test_class):
+
+    class_data, access_token, _ = create_test_class
+
+    assert _ == 201
+    assert class_data is not None
+    assert access_token is not None
 
     class_id = class_data['class_id']
 
@@ -19,12 +59,13 @@ def test_get_class(client, access_token, create_test_class):
     assert response.status_code == 200
 
 
-def test_get_classes(client, access_token, create_test_class):
+def test_get_classes(client, create_test_class):
 
-    class_data, _ = create_test_class
+    class_data, access_token, _ = create_test_class
 
     assert _ == 201
     assert class_data is not None
+    assert access_token is not None
 
     headers = {
         'Authorization': access_token
@@ -35,20 +76,13 @@ def test_get_classes(client, access_token, create_test_class):
     assert response.status_code == 200
 
 
-def test_create_class(client, access_token, create_test_class):
+def test_update_class(client, create_test_class):
 
-    class_data, _ = create_test_class
-
-    assert _ == 201
-    assert class_data is not None
-
-
-def test_update_class(client, access_token, create_test_class):
-
-    class_data, _ = create_test_class
+    class_data, access_token, _ = create_test_class
 
     assert _ == 201
     assert class_data is not None
+    assert access_token is not None
 
     class_id = class_data.get('class_id')
 
@@ -68,12 +102,13 @@ def test_update_class(client, access_token, create_test_class):
     assert response.status_code == 201
 
 
-def test_delete_class(client, access_token, create_test_class):
+def test_delete_class(client, create_test_class):
 
-    class_data, _ = create_test_class
+    class_data, access_token, _ = create_test_class
 
     assert _ == 201
     assert class_data is not None
+    assert access_token is not None
 
     class_id = class_data.get('class_id')
 

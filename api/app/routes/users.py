@@ -1,14 +1,13 @@
 import json
 import sqlalchemy
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, session
 from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from bcrypt import hashpw, gensalt, checkpw
 from ..models import db, Users
 
 
 # User blueprint
-user_route = Blueprint('user_route', __name__, static_folder='../../static',
-                       template_folder='../../templates', url_prefix='/api/users')
+user_route = Blueprint('user_route', __name__, url_prefix='/api/users')
 
 
 # A helper function that verifies user password against the hash
@@ -25,8 +24,10 @@ def hash_password(password: str) -> str:
 @user_route.route("/signin", methods=["POST"])
 def signin_user():
 
-    username: str = request.form["username"]
-    password: str = request.form["password"]
+    data = request.get_json()
+
+    username: str = data.get("username")
+    password: str = data.get("password")
 
     results = db.session.execute(
         db.select(Users).where(Users.username == username)
@@ -39,6 +40,10 @@ def signin_user():
 
     if checkpw(password.encode(), user.password):
         access_token = create_access_token(identity=username)
+
+        # Store session
+        session['username'] = username
+
         return jsonify(msg="Successfully SignedIn!", access_token=f"Bearer {access_token}"), 200
 
     return jsonify(msg="[x] - Incorrect username or password!"), 401
@@ -84,6 +89,10 @@ def get_user(username):
 
     # Get the users identity
     current_user = get_jwt_identity()
+    user_id_from_session = session.get('username')
+
+    if current_user != user_id_from_session:
+        return jsonify("Not authorized"), 404
 
     try:
         results = db.session.execute(
@@ -107,6 +116,10 @@ def get_users():
 
     # Get the users identity
     current_user = get_jwt_identity()
+    user_id_from_session = session.get('username')
+
+    if current_user != user_id_from_session:
+        return jsonify("Not authorized"), 404
 
     try:
 
@@ -127,8 +140,13 @@ def get_users():
 @user_route.route("/edit/<username>", methods=["PUT", "PATCH"])
 @jwt_required()
 def update_user(username):
+
     # Get the users identity
     current_user = get_jwt_identity()
+    user_id_from_session = session.get('username')
+
+    if current_user != user_id_from_session:
+        return jsonify("Not authorized"), 404
 
     data = request.get_json()
 
@@ -162,6 +180,10 @@ def delete_user(username):
 
     # Get the users identity
     current_user = get_jwt_identity()
+    user_id_from_session = session.get('username')
+
+    if current_user != user_id_from_session:
+        return jsonify("Not authorized"), 404
 
     try:
 

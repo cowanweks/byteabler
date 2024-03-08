@@ -51,11 +51,11 @@ class Staffs(db.Model):
 @dataclass
 class ClassReps(db.Model):
     reg_no: Mapped[str] = mapped_column(db.String(25), primary_key=True)
-    first_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
-    middle_name: Mapped[str] = mapped_column(db.String(25), nullable=True)
-    last_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
+    firstname: Mapped[str] = mapped_column(db.String(25), nullable=False)
+    middlename: Mapped[str] = mapped_column(db.String(25), nullable=True)
+    lastname: Mapped[str] = mapped_column(db.String(25), nullable=False)
     class_id = db.Column(db.String(25))
-    phone_no = db.Column(db.String(25))
+    phoneno = db.Column(db.String(25))
     email = db.Column(db.String(25))
 
     def __repr__(self):
@@ -67,7 +67,7 @@ class ClassReps(db.Model):
         Class: {},
         Mobile Phone: {},
         Email: {}
-        """.format(self.staff_no, self.first_name, self.middle_name, self.last_name, self.intake, self.phone_no, self.email)
+        """.format(self.reg_no, self.firstname, self.middlename, self.lastname, self.class_id, self.phoneno, self.email)
 
 
 # Model Representing Units

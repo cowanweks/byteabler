@@ -1,16 +1,17 @@
 import secrets
+import datetime
 
 
 class Config(object):
+    PORT = 3000
     DEBUG = True
     TESTING = False
-    SECRET_KEY = '3f93169b2c2f35c1d1ff06cc0d0a3232'
+    HOST = "127.0.0.1"
+    SESSION_TYPE = 'filesystem'
+    SESSION_USE_SIGNER = True
+    SECRET_KEY = secrets.token_hex(16)
+    JWT_ACCESS_TOKEN_EXPIRES = datetime.timedelta(hours=24)
     SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
-
-
-class ProductionConfig(Config):
-    DEBUG = False
-    SQLALCHEMY_DATABASE_URI = 'postgresql://cowanweks:ultimate@localhost/timetabler'
 
 
 class DevelopmentConfig(Config):
@@ -19,3 +20,10 @@ class DevelopmentConfig(Config):
 
 class TestingConfig(Config):
     TESTING = True
+
+
+class ProductionConfig(Config):
+    PORT = 80
+    DEBUG = False
+    HOST = "0.0.0.0"
+    SQLALCHEMY_DATABASE_URI = 'postgresql://cowanweks:ultimate@localhost/timetabler'

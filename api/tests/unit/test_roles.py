@@ -1,12 +1,52 @@
-from tests.conftest import client, create_test_role
+import pytest
+from tests.conftest import client, signin_test_user
 
 
-def test_get_role(client, access_token, create_test_role):
+@pytest.fixture
+def create_test_role(client, signin_test_user):
 
-    role_data, _ = create_test_role
+    user_data, access_token, _ = signin_test_user
+
+    assert _ == 200
+    assert access_token is not None
+    assert user_data is not None
+
+    headers = {
+        "Content-Type": "application/json",
+        'Authorization': access_token
+    }
+
+    role_data = {
+        'role_id': 'ROLE-001',
+        'role_name': 'Administrator'
+    }
+
+    response = client.post("/api/roles/new",
+                           headers=headers, json=role_data)
+
+    if response.status_code == 201:
+
+        return role_data, access_token, response.status_code
+
+    return None, access_token, response.status_code
+
+
+def test_create_role(client, create_test_role):
+
+    role_data, access_token, _ = create_test_role
 
     assert _ == 201
     assert role_data is not None
+    assert access_token is not None
+
+
+def test_get_role(client, create_test_role):
+
+    role_data, access_token, _ = create_test_role
+
+    assert _ == 201
+    assert role_data is not None
+    assert access_token is not None
 
     role_id = role_data.get('role_id')
 
@@ -19,12 +59,13 @@ def test_get_role(client, access_token, create_test_role):
     assert response.status_code == 200
 
 
-def test_get_roles(client, access_token, create_test_role):
+def test_get_roles(client, create_test_role):
 
-    role_data, _ = create_test_role
+    role_data, access_token, _ = create_test_role
 
     assert _ == 201
     assert role_data is not None
+    assert access_token is not None
 
     headers = {
         'Authorization': access_token
@@ -35,20 +76,13 @@ def test_get_roles(client, access_token, create_test_role):
     assert response.status_code == 200
 
 
-def test_create_role(client, access_token, create_test_role):
+def test_update_role(client, create_test_role):
 
-    role_data, _ = create_test_role
-
-    assert _ == 201
-    assert role_data is not None
-
-
-def test_update_role(client, access_token, create_test_role):
-
-    role_data, _ = create_test_role
+    role_data, access_token, _ = create_test_role
 
     assert _ == 201
     assert role_data is not None
+    assert access_token is not None
 
     role_id = role_data.get('role_id')
 
@@ -66,12 +100,13 @@ def test_update_role(client, access_token, create_test_role):
     assert response.status_code == 200
 
 
-def test_delete_role(client, access_token, create_test_role):
+def test_delete_role(client, create_test_role):
 
-    role_data, _ = create_test_role
+    role_data, access_token, _ = create_test_role
 
     assert _ == 201
     assert role_data is not None
+    assert access_token is not None
 
     role_id = role_data.get('role_id')
 

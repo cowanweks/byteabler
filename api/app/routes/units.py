@@ -7,8 +7,7 @@ from ..models import db, Units
 
 
 # Units blueprint
-unit_route = Blueprint('unit_route', __name__, static_folder='../../static',
-                       template_folder='../../templates', url_prefix='/api/units')
+unit_route = Blueprint('unit_route', __name__, url_prefix='/api/units')
 
 
 # A route that handles fetching multiple unit
@@ -83,6 +82,8 @@ def update_unit(unit_code):
 # The route that handles unit deletion
 @unit_route.route("/delete/<unit_code>", methods=["DELETE"])
 def delete_unit(unit_code):
+
+
     try:
 
         # Check for user existence then delete

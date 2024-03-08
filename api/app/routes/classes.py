@@ -7,20 +7,25 @@ from ..models import db, Classes
 
 
 # Class blueprint
-class_route = Blueprint('class_route', __name__, static_folder='../../static',
-                        template_folder='../../templates', url_prefix='/api/classes')
+class_route = Blueprint('class_route', __name__, url_prefix='/api/classes')
 
 
-# A route that handles fetching multiple class
-@class_route.route("/", methods=["GET"])
-def get_classes():
+# The route that handles class registration
+@class_route.route("/new", methods=["POST"])
+def new_class():
+
+    # TODO Form Validation
+    data = request.get_json()
+
+    class_id = data.get("class_id")
+    class_rep = data.get("class_rep")
 
     try:
 
-        classes = db.session.execute(
-            db.select(Classes).order_by(Classes.class_id)).scalars().all()
+        db.session.add(Classes(class_id=class_id, class_rep=class_rep))
+        db.session.commit()
 
-        return classes, 200
+        return jsonify(msg="Successfully Created new Class!"), 201
 
     except sqlalchemy.exc.SQLAlchemyError as e:
         db.session.rollback()
@@ -48,22 +53,16 @@ def get_class(class_id):
         return jsonify(msg="Database error occurred!", error=str(e)), 500
 
 
-# The route that handles class registration
-@class_route.route("/new", methods=["POST"])
-def new_class():
-
-    # TODO Form Validation
-    data = request.get_json()
-
-    class_id = data.get("class_id")
-    class_rep = data.get("class_rep")
+# A route that handles fetching multiple class
+@class_route.route("/", methods=["GET"])
+def get_classes():
 
     try:
 
-        db.session.add(Classes(class_id=class_id, class_rep=class_rep))
-        db.session.commit()
+        classes = db.session.execute(
+            db.select(Classes).order_by(Classes.class_id)).scalars().all()
 
-        return jsonify(msg="Successfully Created new Class!"), 201
+        return classes, 200
 
     except sqlalchemy.exc.SQLAlchemyError as e:
         db.session.rollback()

@@ -29,6 +29,7 @@ packaging==23.2
 platformdirs==4.2.0
 pluggy==1.4.0
 psycopg2-binary==2.9.9
+pycodestyle==2.11.1
 PyJWT==2.8.0
 pylint==3.0.3
 pyproject-api==1.6.1

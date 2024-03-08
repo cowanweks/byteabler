@@ -1,21 +1,23 @@
 import pytest
-from app import create_app
-from app.extensions import db
+from flask_app import create_app
+from app.extensions import db, jwt, sess
 from app.flask_config import TestingConfig
-from flask_jwt_extended import JWTManager, create_access_token
+from flask_jwt_extended import create_access_token
 
 
 @pytest.fixture()
 def app():
-    app = create_app()
-    app.config.from_object(TestingConfig)
-    db.init_app(app)
-    JWTManager(app)
+    flask_app = create_app()
+    flask_app.config.from_object(TestingConfig)
 
-    with app.app_context():
+    db.init_app(flask_app)
+    jwt.init_app(flask_app)
+    sess.init_app(flask_app)
+
+    with flask_app.app_context():
         db.create_all()
 
-    yield app
+    yield flask_app
 
 
 @pytest.fixture()
@@ -30,19 +32,18 @@ def access_token(app):
 
 
 @pytest.fixture
-def create_test_user(client, access_token):
+def create_test_user(client):
 
     headers = {
-        'Authorization': access_token
+        "Content-Type": "application/json"
     }
 
     user_data = {
         'staff_no': 'STF-0001',
-        'username': 'newuser',
-        'email': 'newuser@example.com',
-        'password': 'a_secure_password',
-        'confirm_password': 'a_secure_password',
-        'role_id': 'R-001'
+        "username": "cowanweks",
+        "password": "cowanweks",
+        "confirm_password": "cowanweks",
+        "role_id": "R-001"
     }
 
     response = client.post("/api/users/new",
@@ -54,66 +55,21 @@ def create_test_user(client, access_token):
 
 
 @pytest.fixture
-def create_test_role(client, access_token):
+def signin_test_user(client, access_token, create_test_user):
+
+    user_data, _ = create_test_user
+
+    assert _ == 201
+    assert user_data is not None
 
     headers = {
-        'Authorization': access_token
+        "Content-Type": "application/json"
     }
 
-    role_data = {
-        'role_id': 'ROLE-001',
-        'role_name': 'Administrator'
-    }
+    response = client.post("/api/users/signin",
+                           headers=headers, json=user_data)
 
-    response = client.post("/api/roles/new",
-                           headers=headers, json=role_data)
+    if response.status_code == 200:
+        return user_data, access_token, response.status_code
 
-    if response.status_code == 201:
-
-        return role_data, response.status_code
-
-    return None, response.status_code
-
-
-@pytest.fixture
-def create_test_unit(client, access_token):
-
-    headers = {
-        'Authorization': access_token
-    }
-
-    unit_data = {
-        'unit_code': 'UNIT-001',
-        'unit_name': 'Human Resources'
-    }
-
-    response = client.post("/api/units/new",
-                           headers=headers, json=unit_data)
-
-    if response.status_code == 201:
-
-        return unit_data, response.status_code
-
-    return None, response.status_code
-
-
-@pytest.fixture
-def create_test_class(client, access_token):
-
-    headers = {
-        'Authorization': access_token
-    }
-
-    class_data = {
-        'class_id': 'btit-sep-2020',
-        'class_rep': 'BTIT/574J/2020'
-    }
-
-    response = client.post("/api/classes/new",
-                           headers=headers, json=class_data)
-
-    if response.status_code == 201:
-
-        return class_data, response.status_code
-
-    return None, response.status_code
+    return None, None, response.status_code
