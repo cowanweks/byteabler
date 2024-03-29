@@ -4,7 +4,7 @@ from app.error_handlers import not_found  # Error Handlers
 
 
 # Create application and return it.
-def create_app():
+def create_app() -> Flask:
     app = Flask(__name__, static_folder="static",
                 template_folder="templates")
 
