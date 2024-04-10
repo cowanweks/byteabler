@@ -1,0 +1,16 @@
+{
+  "cSpell.words": [
+    "authorised",
+    "Bytetabler",
+    "Cowan",
+    "signin",
+    "Signup",
+    "solidjs",
+    "tailwindcss"
+  ],
+
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
+}

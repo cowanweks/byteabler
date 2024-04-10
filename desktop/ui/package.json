@@ -1,0 +1,43 @@
+{
+  "name": "Bytetabler",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host --open",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "playwright test --ui",
+    "docs:dev": "vitepress dev .vitepress",
+    "docs:build": "vitepress build .vitepress",
+    "docs:preview": "vitepress preview .vitepress"
+  },
+  "dependencies": {
+    "@kobalte/core": "^0.12.6",
+    "@solid-primitives/refs": "^1.0.8",
+    "@solidjs/router": "^0.13.1",
+    "@tauri-apps/api": "^1.5.3",
+    "axios": "^1.6.8",
+    "chart.js": "^4.4.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "corvu": "^0.4.8",
+    "embla-carousel-solid": "^8.0.1",
+    "solid-js": "^1.8.15",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.42.1",
+    "@types/node": "^20.12.2",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "sass": "^1.72.0",
+    "solidui-cli": "^0.6.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.2.2",
+    "vite": "^5.2.0",
+    "vite-plugin-solid": "^2.10.2",
+    "vitepress": "^1.0.2"
+  }
+}
