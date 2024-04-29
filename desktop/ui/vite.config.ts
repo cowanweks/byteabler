@@ -1,19 +1,22 @@
+import path from "node:path";
 import { defineConfig } from "vite";
-import path, { dirname } from "node:path";
-import solid from "vite-plugin-solid";
+import react from "@vitejs/plugin-react";
 
-dirname;
 export default defineConfig({
-  plugins: [solid()],
   resolve: {
-    alias: [
-      { find: "@solid-ui", replacement: "/src/components/solid-ui" },
-      { find: "@assets", replacement: "/src/assets" },
-      { find: "@components", replacement: "/src/components" },
-      { find: "@pages", replacement: "/src/pages" },
-      { find: "@providers", replacement: "/src/providers" },
-      { find: "@utils", replacement: "/src/utils" },
-      { find: "@styles", replacement: "/src/styles" },
-    ],
+    alias: {
+      "@shadcn-ui": path.resolve(__dirname, "./src/components/shadcn/ui"),
+      "@public": path.resolve(__dirname, "./public"),
+      "@assets": path.resolve(__dirname, "./src/assets"),
+      "@pages": path.resolve(__dirname, "./src/pages"),
+      "@utils": path.resolve(__dirname, "./src/utils"),
+      "@types": path.resolve(__dirname, "./src/types"),
+      "@hooks": path.resolve(__dirname, "./src/hooks"),
+      "@styles": path.resolve(__dirname, "./src/styles"),
+      "@providers": path.resolve(__dirname, "./src/providers"),
+      "@components": path.resolve(__dirname, "./src/components"),
+    },
   },
+
+  plugins: [react()],
 });

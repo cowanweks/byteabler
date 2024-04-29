@@ -1,8 +1,12 @@
-import './Header.scss'
+import "@styles/Header.scss";
 
-export default function Header() {
+function Header() {
 
-    return <div>
-        Header
-    </div>;
+
+  return (<nav className="">
+
+  </nav>);
 }
+
+
+export default Header;
