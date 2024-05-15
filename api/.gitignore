@@ -23,6 +23,7 @@ wheels/
 share/python-wheels/
 *.egg-info/
 .installed.cfg
+.ruff_cache
 *.egg
 MANIFEST
 
@@ -63,6 +64,8 @@ db.sqlite3-journal
 
 # Flask stuff:
 instance/
+sessions/
+uploads/
 flask_session/
 .webassets-cache
 

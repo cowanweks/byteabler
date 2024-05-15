@@ -4,12 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="url_for('static', filename='css/index.css')">
-    <title>Kings</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    <title>Kings API</title>
 </head>
 
+<style type="text/css">
+    /* index.css */
+
+    /* Reset default margin and padding */
+    body,
+    h1,
+    p {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Center the caption */
+    #caption {
+        text-align: center;
+        font-size: 24px;
+        color: #333;
+        /* Change color to your preference */
+        margin-top: 50px;
+        /* Adjust as needed */
+    }
+</style>
+
 <body>
-    Hello from Index Page
+    <div class="container">
+        <h1>Welcome to Kings API</h1>
+
+        <p id="caption">Hello from Index Page</p>
+
+        <h2>Documentation</h2>
+
+        <section>
+            <h3>Endpoint: /users</h3>
+            <p>Description: This endpoint retrieves a list of users.</p>
+            <p>HTTP Method: GET</p>
+            <p>Parameters: None</p>
+            <p>Example Usage: <code>GET /users</code></p>
+        </section>
+
+        <section>
+            <h3>Endpoint: /users/{id}</h3>
+            <p>Description: This endpoint retrieves details of a specific user by their ID.</p>
+            <p>HTTP Method: GET</p>
+            <p>Parameters: <code>id</code> (User ID)</p>
+            <p>Example Usage: <code>GET /users/123</code></p>
+        </section>
+
+        <!-- Add more sections for other endpoints as needed -->
+
+    </div>
 </body>
 
 </html>
