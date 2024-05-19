@@ -2,6 +2,7 @@ from app import create_app
 from waitress import serve
 
 
+
 def main():
     # Create the flask application
     flask_app = create_app()
