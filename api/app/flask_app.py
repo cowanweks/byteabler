@@ -6,6 +6,7 @@ from app.routes import (
     user_route,
     role_route,
     unit_route,
+    staff_route,
     class_route,
     classrep_route,
 )  # Routes
@@ -23,16 +24,14 @@ def create_app() -> Flask:
     # Prevent redirects in blueprints
     app.url_map.strict_slashes = False
     app.add_url_rule(
-        "/bytabler/api/v1", endpoint="api_index", view_func=lambda: "API Home Page"
+        "/api/v1", endpoint="api_index", view_func=lambda: "API Home Page"
     )
 
     # Set the application configuration
     if os.getenv("ENV") == "production":
         app.config.from_object(ProductionConfig)
-
     elif os.getenv("ENV") == "development":
         app.config.from_object(DevelopmentConfig)
-
     else:
         app.config.from_object(TestingConfig)
 
@@ -41,6 +40,7 @@ def create_app() -> Flask:
     app.register_blueprint(user_route)
     app.register_blueprint(role_route)
     app.register_blueprint(unit_route)
+    app.register_blueprint(staff_route)
     app.register_blueprint(class_route)
     app.register_blueprint(classrep_route)
 

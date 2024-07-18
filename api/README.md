@@ -2,7 +2,7 @@
 
 ## What about the API
 
-The API is made to serve a mobile application being developed by @arekings and a desktop application that is to be developed yet. Links to the desktop app [[]] and mobile app [[]] are as given.
+The API is made to serve a mobile application being developed by [@arekings](https://github.com/arekings) and a desktop application that is to be developed yet. Links to the desktop app [[]] and mobile app [[]] are as given.
 
 - The API serves as the applications powerhouse where all the logic is handled and what the end users have to do is to send a request for a resource and the application handles.
 

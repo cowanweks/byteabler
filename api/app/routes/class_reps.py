@@ -3,12 +3,12 @@
 from uuid import uuid4
 from sqlalchemy.exc import SQLAlchemyError
 from flask import Blueprint, request, jsonify
-from app.models import db, ClassReps
+from app.models import db, ClassRep
 
 
 # Role blueprint
 classrep_route = Blueprint(
-    "classrep_route", __name__, url_prefix="/bytabler/api/v1/classreps"
+    "classrep_route", __name__, url_prefix="/api/v1/classreps"
 )
 
 
@@ -21,16 +21,16 @@ def get_classreps():
         if classrep_id:
             classreps = (
                 db.session.execute(
-                    db.select(ClassReps)
-                    .where(ClassReps.classrep_id == classrep_id)
-                    .order_by(ClassReps.classrep_id)
+                    db.select(ClassRep)
+                    .where(ClassRep.classrep_id == classrep_id)
+                    .order_by(ClassRep.classrep_id)
                 )
                 .scalars()
                 .all()
             )
 
         classreps = (
-            db.session.execute(db.select(ClassReps).order_by(ClassReps.classrep_id))
+            db.session.execute(db.select(ClassRep).order_by(ClassRep.classrep_id))
             .scalars()
             .all()
         )
@@ -60,7 +60,7 @@ def new_classrep():
 
     try:
         db.session.add(
-            ClassReps(
+            ClassRep(
                 reg_no=reg_no,
                 class_id=class_id,
                 classrep_id=classrep_id,
@@ -88,8 +88,8 @@ def update_classrep():
 
     try:
         db.session.execute(
-            db.update(ClassReps)
-            .where(ClassReps.classrep_id == classrep_id)
+            db.update(ClassRep)
+            .where(ClassRep.classrep_id == classrep_id)
             .values(data)
         )
         db.session.commit()
@@ -109,7 +109,7 @@ def delete_classrep():
 
     try:
         db.session.execute(
-            db.delete(ClassReps).where(ClassReps.classrep_id == classrep_id)
+            db.delete(ClassRep).where(ClassRep.classrep_id == classrep_id)
         )
         db.session.commit()
         return jsonify(msg="Successfully Deleted Role!"), 200

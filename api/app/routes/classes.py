@@ -3,11 +3,11 @@
 from uuid import uuid4
 import sqlalchemy
 from flask import Blueprint, request, jsonify
-from app.models import db, Classes
+from app.models import db, Class
 
 
 # Class blueprint
-class_route = Blueprint("class_route", __name__, url_prefix="/bytabler/api/v1/classes")
+class_route = Blueprint("class_route", __name__, url_prefix="/api/v1/classes")
 
 
 # The route that handles class registration
@@ -19,7 +19,7 @@ def new_class():
     class_rep = data.get("class_rep")
 
     try:
-        db.session.add(Classes(class_id=class_id, class_rep=class_rep))
+        db.session.add(Class(class_id=class_id, class_rep=class_rep))
         db.session.commit()
         return jsonify(msg="Successfully Created new Class!"), 201
 
@@ -38,16 +38,16 @@ def get_classes():
         if class_id:
             classes = (
                 db.session.execute(
-                    db.select(Classes)
-                    .where(Classes.class_id == class_id)
-                    .order_by(Classes.class_id)
+                    db.select(Class)
+                    .where(Class.class_id == class_id)
+                    .order_by(Class.class_id)
                 )
                 .scalars()
                 .all()
             )
 
         classes = (
-            db.session.execute(db.select(Classes).order_by(Classes.class_id))
+            db.session.execute(db.select(Class).order_by(Class.class_id))
             .scalars()
             .all()
         )
@@ -69,8 +69,8 @@ def update_class():
 
     try:
         db.session.execute(
-            db.update(Classes)
-            .where(Classes.class_id == class_id)
+            db.update(Class)
+            .where(Class.class_id == class_id)
             .values(class_rep=class_rep)
         )
         db.session.commit()
@@ -88,7 +88,7 @@ def delete_class():
     class_id = request.args.get("class_id")
 
     try:
-        db.session.execute(db.delete(Classes).where(Classes.class_id == class_id))
+        db.session.execute(db.delete(Class).where(Class.class_id == class_id))
         db.session.commit()
         return jsonify(msg="Successfully Deleted Class!"), 200
 

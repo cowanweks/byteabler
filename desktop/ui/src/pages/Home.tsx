@@ -1,9 +1,8 @@
-import '@styles/Home.scss'
 
 export default function Home() {
 
 
-    return <div id='Home' class="">
+    return <div id='Home' className="">
         Hello from home
     </div>
 }

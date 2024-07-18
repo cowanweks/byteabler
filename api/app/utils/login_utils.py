@@ -12,10 +12,10 @@ def hash_password(password: str) -> str:
     return hashed_pwd.decode()
 
 
-def verify_password(password: str, hash: bytes) -> bool:
+def verify_password(password: str, hashed_pwd: str) -> bool:
     """A helper function that verifies user password against the hash"""
 
-    if checkpw(password.encode(), hash):
+    if checkpw(password.encode(), hashed_pwd.encode()):
         return True
 
     return False

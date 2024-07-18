@@ -5,7 +5,7 @@ def test_create_classrep(client):
     headers = {}
 
     response = client.post(
-        "/bytabler/api/v1/classreps", headers=headers, json=new_classrep_data
+        "/api/v1/classreps", headers=headers, json=new_classrep_data
     )
 
     assert response.status_code == 201, "{}".format(response.json.get("msg"))

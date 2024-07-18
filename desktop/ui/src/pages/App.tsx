@@ -1,14 +1,18 @@
-import '@styles/App.scss'
-import { Button } from '@shadcn-ui/button';
-import { useState } from 'react'
+import "@styles/App.scss";
+import { Header, Footer, SideBar } from "@components/index";
+import { Outlet } from "react-router-dom"
 
 function App() {
 
-  const [theme, setTheme] = useState('light');
 
   return (
-    <div className={theme == 'dark' ? 'dark' : 'light'}>
-      <Button onClick={() => setTheme('dark')}> Click Me!</Button>
+    <div id="App">
+      <Header />
+      <SideBar />
+      <div id="Content" className="">
+        <Outlet />
+      </div>
+      <Footer />
     </div>
   )
 }

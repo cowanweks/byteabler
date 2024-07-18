@@ -2,7 +2,6 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@shadcn-ui/*": ["./src/components/shadcn/ui/*"],
       "@public/*": ["./public/*"],
       "@pages/*": ["./src/pages/*"],
       "@utils/*": ["./src/utils/*"],
@@ -11,7 +10,8 @@
       "@styles/*": ["./src/styles/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
-      "@providers/*": ["./src/providers/*"]
+      "@providers/*": ["./src/providers/*"],
+      "@services/*": ["./src/services/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,

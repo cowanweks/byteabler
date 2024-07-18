@@ -4,11 +4,11 @@ from uuid import uuid4
 import sqlalchemy
 from flask import Blueprint, request, jsonify
 from sqlalchemy.exc import IntegrityError, SQLAlchemyError
-from app.models import db, Roles
+from app.models import db, Role
 
 
 # Role blueprint
-role_route = Blueprint("role_route", __name__, url_prefix="/bytabler/api/v1/roles")
+role_route = Blueprint("role_route", __name__, url_prefix="/api/v1/roles")
 
 
 # The route that handles role registration
@@ -27,7 +27,7 @@ def new_role():
 
     try:
         db.session.add(
-            Roles(
+            Role(
                 role_id=role_id, role_name=role_name, role_description=role_description
             )
         )
@@ -42,7 +42,7 @@ def new_role():
 
 @role_route.route("/", methods=["GET"])
 def get_roles():
-    """Get the Roles"""
+    """Get the Role"""
 
     role_id = request.args.get("role_id")
 
@@ -50,15 +50,15 @@ def get_roles():
         if role_id:
             roles = (
                 db.session.execute(
-                    db.select(Roles)
-                    .where(Roles.role_id == role_id)
-                    .order_by(Roles.role_id)
+                    db.select(Role)
+                    .where(Role.role_id == role_id)
+                    .order_by(Role.role_id)
                 )
                 .scalars()
                 .all()
             )
         roles = (
-            db.session.execute(db.select(Roles).order_by(Roles.role_id)).scalars().all()
+            db.session.execute(db.select(Role).order_by(Role.role_id)).scalars().all()
         )
         serialized_roles = [role.serialize() for role in roles]
         return jsonify(serialized_roles), 200
@@ -78,7 +78,7 @@ def update_role():
 
     try:
         db.session.execute(
-            db.update(Roles).where(Roles.role_id == role_id).values(data)
+            db.update(Role).where(Role.role_id == role_id).values(data)
         )
         db.session.commit()
         return jsonify(msg="Successfully Updated Role!"), 200
@@ -96,7 +96,7 @@ def delete_role():
     role_id = request.args.get("role_id")
 
     try:
-        db.session.execute(db.delete(Roles).where(Roles.role_id == role_id))
+        db.session.execute(db.delete(Role).where(Role.role_id == role_id))
         db.session.commit()
         return jsonify(msg="Successfully Deleted Role!"), 200
 

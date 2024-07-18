@@ -1,97 +1,108 @@
-""" """
-
-from uuid import uuid4
+from app.models import db, Unit
 from flask import Blueprint, request, jsonify
-from app.models import db, Units
-from sqlalchemy.exc import SQLAlchemyError
-
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
+from app.forms.unit import UnitRegistrationForm, UnitUpdateForm
 
 # Units blueprint
-unit_route = Blueprint("unit_route", __name__, url_prefix="/bytabler/api/v1/units")
-
-
-# A route that handles fetching multiple unit
-@unit_route.route("/", methods=["GET"])
-def get_units():
-    """"""
-
-    unit_id = request.args.get("unit_id")
-
-    try:
-        if unit_id:
-            units = (
-                db.session.execute(
-                    db.select(Units)
-                    .where(Units.unit_id == unit_id)
-                    .order_by(Units.unit_id)
-                )
-                .scalars()
-                .all()
-            )
-
-        units = (
-            db.session.execute(db.select(Units).order_by(Units.unit_id)).scalars().all()
-        )
-
-        serialized_units = [unit.serialize() for unit in units]
-        return jsonify(serialized_units), 200
-
-    except SQLAlchemyError as ex:
-        print(ex)
-        return jsonify(msg="Database error occurred!"), 500
+unit_route = Blueprint("unit_route", __name__, url_prefix="/api/v1/units")
 
 
 @unit_route.route("/", methods=["POST"])
-def new_unit():
-    """"""
-    # TODO Form Validation
-    data = request.get_json()
-
-    unit_id = str(uuid4())
-    unit_code = data.get("unit_code")
-    unit_name = data.get("unit_name")
+def new_unit_route():
+    """New Unit"""
 
     try:
-        db.session.add(Units(unit_id=unit_id, unit_code=unit_code, unit_name=unit_name))
-        db.session.commit()
-        return jsonify(msg="Successfully Created new Unit!"), 201
+        new_unit_form = UnitRegistrationForm(request.form)
 
-    except SQLAlchemyError as ex:
-        print(str(ex))
-        db.session.rollback()
-        return jsonify(msg="Database error occurred!"), 500
+        if new_unit_form.validate():
+            db.session.execute(
+                db.insert(Unit).values(
+                    unit_code=new_unit_form.unitCode.data,
+                    unit_name=new_unit_form.unitName.data
+                )
+            )
+            db.session.commit()
+            return jsonify("Successfully Created new Unit!"), 201
 
+        else:
+            print(new_unit_form.errors)
+            return jsonify(new_unit_form.errors), 400
 
-@unit_route.route("/", methods=["PUT", "PATCH"])
-def update_unit():
-    """"""
-    unit_id = request.args.get("unit_id")
-    data = request.get_json()
-
-    try:
-        db.session.execute(
-            db.update(Units).where(Units.unit_id == unit_id).values(data)
-        )
-        db.session.commit()
-        return jsonify(msg="Successfully Updated Units!"), 201
-
-    except SQLAlchemyError as ex:
-        print(str(ex))
-        db.session.rollback()
-        return jsonify(msg="Database error occurred!", error=str(e)), 500
+    except IntegrityError as ex:
+        print(ex)
+        return jsonify("Unit already exists!"), 400
 
 
-@unit_route.route("/", methods=["DELETE"])
-def delete_unit():
-    """"""
-    unit_id = request.args.get("unit_id")
+@unit_route.get("/<string:unitCode>")
+def get_unit_route(unitCode: str):
+    """Get Units"""
 
     try:
-        db.session.execute(db.delete(Units).where(Units.unit_id == unit_id))
-        db.session.commit()
-        return jsonify(msg="Successfully Deleted Units!"), 200
+        units = db.session.query(Unit).filter_by(unit_code=unitCode).all()
+
+        if not units:
+            return []
+
+        serialized_units = [unit.serialize() for unit in units]
+
+        return jsonify(serialized_units), 200
+
+    except Exception as ex:
+        print(ex)
+        return jsonify(f"Database error occurred! {ex}"), 500
+
+
+@unit_route.get("/")
+def get_units_route():
+    """Get Units"""
+
+    try:
+        units = db.session.query(Unit).all()
+        serialized_units = [unit.serialize() for unit in units]
+        return jsonify(serialized_units), 200
+
+    except Exception as ex:
+        print(ex)
+        return jsonify(f"Database error occurred! {ex}"), 500
+
+
+@unit_route.route("/<string:unitCode>", methods=["PUT", "PATCH"])
+def update_user_route(unitCode: str):
+    """Update Unit"""
+
+    try:
+        updated_unit_form = UnitUpdateForm(request.form)
+
+        if updated_unit_form.validate():
+            db.session.execute(
+                db.update(Unit)
+                .where(Unit.unit_code == unitCode)
+                .values(unit_name=updated_unit_form.unit_name.data)
+            )
+            db.session.commit()
+            return jsonify("Successfully Updated Unit!"), 200
+
+        else:
+            return jsonify(updated_unit_form.errors), 400
 
     except SQLAlchemyError as ex:
-        print(str(ex))
-        db.session.rollback()
-        return jsonify(msg="Database error occurred!"), 500
+        print(ex)
+        return False, "Database error occurred!"
+
+
+@unit_route.route("/<string:unitCode>", methods=["DELETE"])
+def delete_user_route(unitCode: str):
+    """Delete Unit"""
+
+    try:
+        db.session.execute(db.delete(Unit).where(Unit.unit_code == unitCode))
+        db.session.commit()
+        db.session.close()
+        return jsonify("Successfully Deleted Unit!"), 200
+
+    except SQLAlchemyError as ex:
+        print(ex)
+        db.session.close()
+        return jsonify("Database error occurred!"), 500
+
+

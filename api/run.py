@@ -2,19 +2,13 @@ from app import create_app
 from waitress import serve
 
 
-
 def main():
-    # Create the flask application
+    """Create the flask application"""
     flask_app = create_app()
 
     if flask_app.config.get("ENV") == "production":
         try:
-            serve(
-                app=flask_app,
-                host="0.0.0.0",
-                port=5000,
-                url_prefix="/bytabler",
-            )
+            serve(app=flask_app, host="0.0.0.0", port=5000)
         except Exception as ex:
             print(str(ex))
 

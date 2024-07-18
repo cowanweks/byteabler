@@ -1,11 +1,11 @@
 """ """
 
 new_user_data = {
-    "staff_no": "STF-0002",
-    "username": "demo",
+    "staff_no": "STF-0001",
+    "username": "cowanweks",
     "password": "cowanweks",
     "confirm_password": "cowanweks",
-    "role_id": "R-001",
+    "roles": "admin",
 }
 
 

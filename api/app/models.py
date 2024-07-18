@@ -1,20 +1,20 @@
 import datetime
+from uuid import uuid4
 from dataclasses import dataclass
 from sqlalchemy.types import DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 from .extensions import db
 
 
-@dataclass
-class Users(db.Model):
+class User(db.Model):
     """Model Representing Users"""
 
-    user_id: Mapped[str] = mapped_column(db.String, primary_key=True)
-    staff_no: Mapped[str] = mapped_column(db.String(25), unique=True)
-    username: Mapped[str] = mapped_column(db.String(25), unique=True, nullable=False)
-    password = db.Column(db.String(255))
-    role: Mapped[str] = mapped_column(db.String(25))
-    reg_date: Mapped[datetime.datetime] = mapped_column(
+    user_id = mapped_column(db.String, primary_key=True)
+    staff_no = mapped_column(db.String(25), unique=True)
+    username = mapped_column(db.String(25), unique=True, nullable=False)
+    password = mapped_column(db.String(255))
+    roles = mapped_column(db.String(25))
+    reg_date = mapped_column(
         DateTime(timezone=True), default=datetime.datetime.now()
     )
 
@@ -24,22 +24,21 @@ class Users(db.Model):
             "staff_no": self.staff_no,
             "password": self.password,
             "username": self.username,
-            "role": self.role,
+            "role": self.roles,
             "registration_date": self.reg_date,
         }
 
 
-@dataclass
-class Staffs(db.Model):
+class Staff(db.Model):
     """Model Representing Staffs"""
 
-    staff_no: Mapped[str] = mapped_column(db.String(25), primary_key=True)
-    first_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
-    middle_name: Mapped[str] = mapped_column(db.String(25), nullable=True)
-    last_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
-    nat_id = db.Column(db.String(25))
-    phone_no = db.Column(db.String(25))
-    email = db.Column(db.String(25))
+    staff_no = mapped_column(db.String(25), primary_key=True, default=str(uuid4()))
+    first_name = mapped_column(db.String(25), nullable=False)
+    middle_name = mapped_column(db.String(25), nullable=True)
+    last_name = mapped_column(db.String(25), nullable=False)
+    nat_id = mapped_column(db.String(25))
+    phone_no = mapped_column(db.String(25))
+    email = mapped_column(db.String(25))
 
     def serialize(self):
         return {
@@ -53,18 +52,17 @@ class Staffs(db.Model):
         }
 
 
-@dataclass
-class ClassReps(db.Model):
+class ClassRep(db.Model):
     """Model Representing Class Reps"""
 
-    classrep_id: Mapped[str] = mapped_column(db.String, primary_key=True)
-    reg_no: Mapped[str] = mapped_column(db.String(25))
-    firstname: Mapped[str] = mapped_column(db.String(25), nullable=False)
-    middlename: Mapped[str] = mapped_column(db.String(25), nullable=True)
-    lastname: Mapped[str] = mapped_column(db.String(25), nullable=False)
-    class_id: Mapped[str] = mapped_column(db.String(25), nullable=False)
-    phoneno: Mapped[str] = mapped_column(db.String(25), nullable=False)
-    email: Mapped[str] = mapped_column(db.String(25), nullable=False)
+    classrep_id = mapped_column(db.String, primary_key=True, default=str(uuid4()))
+    reg_no = mapped_column(db.String(25))
+    firstname = mapped_column(db.String(25), nullable=False)
+    middlename = mapped_column(db.String(25), nullable=True)
+    lastname = mapped_column(db.String(25), nullable=False)
+    class_id = mapped_column(db.String(25), nullable=False)
+    phoneno = mapped_column(db.String(25), nullable=False)
+    email = mapped_column(db.String(25), nullable=False)
 
     def serialize(self):
         return {
@@ -79,28 +77,25 @@ class ClassReps(db.Model):
         }
 
 
-@dataclass
-class Units(db.Model):
+class Unit(db.Model):
     """Model Representing Units"""
 
-    unit_id: Mapped[str] = mapped_column(db.String, primary_key=True)
-    unit_code: Mapped[str] = mapped_column(db.String(25))
-    unit_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
+    unit_code = mapped_column(db.String(25), primary_key=True)
+    unit_name = mapped_column(db.String(25), nullable=False)
 
     def serialize(self):
         return {
-            "unit_id": self.unit_id,
-            "unit_code": self.unit_code,
-            "unit_name": self.unit_name,
+            "unitCode": self.unit_code,
+            "unitName": self.unit_name,
         }
 
 
-@dataclass
-class Classes(db.Model):
+class Class(db.Model):
     """Model Representing Classes"""
 
-    class_id: Mapped[str] = mapped_column(db.String(25), primary_key=True)
-    class_rep: Mapped[str] = mapped_column(db.String(25), nullable=False)
+    class_id = mapped_column(db.String(25), primary_key=True)
+    class_name = mapped_column(db.String, default=str(uuid4()))
+    class_rep = mapped_column(db.String(25), nullable=False)
 
     def serialize(self):
         return {
@@ -109,15 +104,15 @@ class Classes(db.Model):
         }
 
 
-@dataclass
-class Roles(db.Model):
+class Role(db.Model):
     """Model Representing Roles available to registered users"""
 
-    role_id: Mapped[str] = mapped_column(
-        db.String(25), primary_key=True, nullable=False
+    role_id = mapped_column(
+        db.String(25), primary_key=True, nullable=False,
+        default=str(uuid4())
     )
-    role_name: Mapped[str] = mapped_column(db.String(25), unique=True, nullable=False)
-    role_description: Mapped[str] = mapped_column(db.String(255))
+    role_name = mapped_column(db.String(25), unique=True, nullable=False)
+    role_description = mapped_column(db.String(255))
 
     def serialize(self):
         return {

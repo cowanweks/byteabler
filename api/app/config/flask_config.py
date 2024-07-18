@@ -1,6 +1,11 @@
 import secrets
 from cachelib.file import FileSystemCache
-from app.config import DBConfig
+
+
+class DBConfig(object):
+    """Configs for the database"""
+
+    SQLALCHEMY_DATABASE_URI = "sqlite:///demo.db"
 
 
 class Config(DBConfig):
@@ -21,12 +26,12 @@ class Config(DBConfig):
 
 class DevelopmentConfig(Config):
     ENV = "development"
-    pass
 
 
 class TestingConfig(Config):
     ENV = "testing"
     TESTING = True
+    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
 
 
 class ProductionConfig(Config):
