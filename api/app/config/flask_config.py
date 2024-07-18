@@ -39,5 +39,5 @@ class ProductionConfig(Config):
     DEBUG = False
     HOST = "0.0.0.0"
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = "postgres://wqrzpmlf:COpWVXHpfaB-c-udEI7lcWxD1tcp8Ho8@ruby.db.elephantsql.com/wqrzpmlf"
+    SQLALCHEMY_DATABASE_URI = "postgresql://wqrzpmlf:COpWVXHpfaB-c-udEI7lcWxD1tcp8Ho8@ruby.db.elephantsql.com/wqrzpmlf"
 
