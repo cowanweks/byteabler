@@ -52,7 +52,8 @@ public class Fragment_login extends Fragment {
                     data[0] = email;
                     data[1] = password;
 
-                    PutData putData = new PutData("http://localhost:63343/LoginRegiste/login.php", "POST", field, data);
+                    // Use 10.0.2.2 instead of localhost
+                    PutData putData = new PutData("http://10.0.2.2/loginregister/login.php", "POST", field, data);
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             progressBar.setVisibility(View.GONE);
@@ -60,7 +61,7 @@ public class Fragment_login extends Fragment {
 
                             if (result.equals("Login Success")) {
                                 Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                Intent intent = new Intent(getContext(), ClassRepDashboard.class);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
