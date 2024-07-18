@@ -1,0 +1,1 @@
+web: gunicorn --workers=1 --chdir api run:flask_app
