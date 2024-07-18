@@ -1,8 +1,15 @@
 import datetime
+from uuid import uuid4
+from dataclasses import dataclass
+from sqlalchemy.types import DateTime
 from sqlalchemy.orm import Mapped, mapped_column
-from .db_config import flask_app, db
+from .extensions import db
 
 
+<<<<<<< HEAD
+class User(db.Model):
+    """Model Representing Users"""
+=======
 # Model Representing Users
 class Users(db.Model):
     staff_no: Mapped[str] = mapped_column(db.String(25), primary_key=True)
@@ -11,16 +18,32 @@ class Users(db.Model):
     password = db.Column(db.String(255))
     role = db.Column(db.String(25))
     reg_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+>>>>>>> cbacc08b0b74fe0cbca5be297c545a36cc51f744
 
-    def __repr__(self):
-        return """
-        StaffNo: {},
-        UserName: {},
-        Role: {},
-        RegistrationDate: {}
-        """.format(self.staff_no, self.username, self.role, self.reg_date)
+    user_id = mapped_column(db.String, primary_key=True)
+    staff_no = mapped_column(db.String(25), unique=True)
+    username = mapped_column(db.String(25), unique=True, nullable=False)
+    password = mapped_column(db.String(255))
+    roles = mapped_column(db.String(25))
+    reg_date = mapped_column(
+        DateTime(timezone=True), default=datetime.datetime.now()
+    )
+
+    def serialize(self):
+        return {
+            "user_id": self.user_id,
+            "staff_no": self.staff_no,
+            "password": self.password,
+            "username": self.username,
+            "role": self.roles,
+            "registration_date": self.reg_date,
+        }
 
 
+<<<<<<< HEAD
+class Staff(db.Model):
+    """Model Representing Staffs"""
+=======
 # Model Representing Staffs
 class Staffs(db.Model):
     staff_no: Mapped[str] = mapped_column(db.String(25), primary_key=True)
@@ -30,19 +53,32 @@ class Staffs(db.Model):
     nat_id = db.Column(db.String(25))
     phone_no = db.Column(db.String(25))
     email = db.Column(db.String(25))
+>>>>>>> cbacc08b0b74fe0cbca5be297c545a36cc51f744
 
-    def __repr__(self):
-        return """
-        StaffNo: {},
-        FastName: {},
-        MiddName: {},
-        LastName: {},
-        NatID No: {},
-        Mobile Phone: {},
-        Email: {}
-        """.format(self.staff_no, self.first_name, self.middle_name, self.last_name, self.nat_id, self.phone_no, self.email)
+    staff_no = mapped_column(db.String(25), primary_key=True, default=str(uuid4()))
+    first_name = mapped_column(db.String(25), nullable=False)
+    middle_name = mapped_column(db.String(25), nullable=True)
+    last_name = mapped_column(db.String(25), nullable=False)
+    nat_id = mapped_column(db.String(25))
+    phone_no = mapped_column(db.String(25))
+    email = mapped_column(db.String(25))
+
+    def serialize(self):
+        return {
+            "staff_no": self.staff_no,
+            "firstname": self.first_name,
+            "middlename": self.middle_name,
+            "lastname": self.last_name,
+            "nationalID": self.nat_id,
+            "phone": self.phone_no,
+            "email": self.email,
+        }
 
 
+<<<<<<< HEAD
+class ClassRep(db.Model):
+    """Model Representing Class Reps"""
+=======
 # Model Representing Class Reps
 class ClassReps(db.Model):
     reg_no: Mapped[str] = mapped_column(db.String(25), primary_key=True)
@@ -52,53 +88,89 @@ class ClassReps(db.Model):
     intake = db.Column(db.String(25))
     phone_no = db.Column(db.String(25))
     email = db.Column(db.String(25))
+>>>>>>> cbacc08b0b74fe0cbca5be297c545a36cc51f744
 
-    def __repr__(self):
-        return """
-        RegNo: {},
-        FirstName: {},
-        MiddName: {},
-        LastName: {},
-        Class: {},
-        Mobile Phone: {},
-        Email: {}
-        """.format(self.staff_no, self.first_name, self.middle_name, self.last_name, self.intake, self.phone_no, self.email)
+    classrep_id = mapped_column(db.String, primary_key=True, default=str(uuid4()))
+    reg_no = mapped_column(db.String(25))
+    firstname = mapped_column(db.String(25), nullable=False)
+    middlename = mapped_column(db.String(25), nullable=True)
+    lastname = mapped_column(db.String(25), nullable=False)
+    class_id = mapped_column(db.String(25), nullable=False)
+    phoneno = mapped_column(db.String(25), nullable=False)
+    email = mapped_column(db.String(25), nullable=False)
+
+    def serialize(self):
+        return {
+            "classrep_id": self.classrep_id,
+            "reg_no": self.reg_no,
+            "firstname": self.firstname,
+            "middlename": self.middlename,
+            "lastname": self.lastname,
+            "class_id": self.class_id,
+            "phone": self.phoneno,
+            "email": self.email,
+        }
 
 
+<<<<<<< HEAD
+class Unit(db.Model):
+    """Model Representing Units"""
+=======
 # Model Representing Units
 class Units(db.Model):
     unit_code: Mapped[str] = mapped_column(db.String(25), primary_key=True)
     unit_name: Mapped[str] = mapped_column(db.String(25), nullable=False)
+>>>>>>> cbacc08b0b74fe0cbca5be297c545a36cc51f744
 
-    def __repr__(self):
-        return """
-        Unit Code: {},
-        Unit Name: {},
-        """.format(self.unit_code, self.unit_name)
+    unit_code = mapped_column(db.String(25), primary_key=True)
+    unit_name = mapped_column(db.String(25), nullable=False)
+
+    def serialize(self):
+        return {
+            "unitCode": self.unit_code,
+            "unitName": self.unit_name,
+        }
 
 
+<<<<<<< HEAD
+class Class(db.Model):
+    """Model Representing Classes"""
+=======
 # Model Representing Classes
 class Classes(db.Model):
     class_id: Mapped[str] = mapped_column(db.String(25), primary_key=True)
     class_rep: Mapped[str] = mapped_column(db.String(25), nullable=False)
+>>>>>>> cbacc08b0b74fe0cbca5be297c545a36cc51f744
 
-    def __repr__(self):
-        return """
-        Class ID: {},
-        Class Representative: {},
-        """.format(self.class_id, self.class_rep)
+    class_id = mapped_column(db.String(25), primary_key=True)
+    class_name = mapped_column(db.String, default=str(uuid4()))
+    class_rep = mapped_column(db.String(25), nullable=False)
+
+    def serialize(self):
+        return {
+            "class_id": self.class_id,
+            "class_rep": self.class_rep,
+        }
 
 
+<<<<<<< HEAD
+class Role(db.Model):
+    """Model Representing Roles available to registered users"""
+=======
 # Model Representing Roles available to registered users
 class Roles(db.Model):
     role: Mapped[str] = mapped_column(db.String(25), primary_key=True)
+>>>>>>> cbacc08b0b74fe0cbca5be297c545a36cc51f744
 
-    def __repr__(self) -> str:
-        return """
-        Role: {}
-        """.format(self.role)
+    role_id = mapped_column(
+        db.String(25), primary_key=True, nullable=False,
+        default=str(uuid4())
+    )
+    role_name = mapped_column(db.String(25), unique=True, nullable=False)
+    role_description = mapped_column(db.String(255))
 
-
-# Create all the Tables from the above models
-with flask_app.app_context():
-    db.create_all()
+    def serialize(self):
+        return {
+            "role_id": self.role_id,
+            "role_name": self.role_name,
+        }

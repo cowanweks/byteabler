@@ -1,80 +1,106 @@
-"""
+""" """
 
-"""
-from flask import Blueprint, request
-from bcrypt import hashpw, gensalt, checkpw
-from ..models import db, Roles
+from uuid import uuid4
+import sqlalchemy
+from flask import Blueprint, request, jsonify
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
+from app.models import db, Role
 
 
 # Role blueprint
-role_route = Blueprint('role_route', __name__, static_folder='../../static',
-                       template_folder='../../templates', url_prefix='/api/roles')
-
-
-# A route that handles fetching multiple role
-@role_route.route("/", methods=["GET"])
-def get_roles():
-    roles = []
-    roles = db.session.execute(
-        db.select(Roles).order_by(Roles.rolename)).scalars().all()
-
-    return roles, 200
-
-
-# The route that handles fetching a specific role
-@role_route.route("/<rolename>", methods=["GET"])
-def get_role(rolename):
-    rolename = request.form["role"]
-    return f"Hello {rolename}"
+role_route = Blueprint("role_route", __name__, url_prefix="/api/v1/roles")
 
 
 # The route that handles role registration
-@role_route.route("/register", methods=["POST"])
+@role_route.route("/", methods=["POST"])
 def new_role():
+    # Get the users identity
+
     # TODO Form Validation
-    rolename = request.form["role"]
+    data = request.get_json()
 
-    db.session.add(Roles(role=rolename))
-    db.session.commit()
+    role_id = str(uuid4())
+    role_name = data.get("role_name")
+    role_description = data.get("role_description")
 
-    return "Successfully Created new Role!"
+    print(role_description)
+
+    try:
+        db.session.add(
+            Role(
+                role_id=role_id, role_name=role_name, role_description=role_description
+            )
+        )
+        db.session.commit()
+        return jsonify("Successfully Created new Role!"), 201
+
+    except IntegrityError as ex:
+        print("{}".format(ex))
+        db.session.rollback()
+        return jsonify(msg="Role already exists!"), 400
+
+
+@role_route.route("/", methods=["GET"])
+def get_roles():
+    """Get the Role"""
+
+    role_id = request.args.get("role_id")
+
+    try:
+        if role_id:
+            roles = (
+                db.session.execute(
+                    db.select(Role)
+                    .where(Role.role_id == role_id)
+                    .order_by(Role.role_id)
+                )
+                .scalars()
+                .all()
+            )
+        roles = (
+            db.session.execute(db.select(Role).order_by(Role.role_id)).scalars().all()
+        )
+        serialized_roles = [role.serialize() for role in roles]
+        return jsonify(serialized_roles), 200
+
+    except SQLAlchemyError as ex:
+        print(str(ex))
+        db.session.rollback()
+        return jsonify(msg="Database error occurred!"), 500
 
 
 # The Route that handles role information update
-@role_route.route("/edit/<rolename>", methods=["PUT", "PATCH"])
-def update_role(rolename):
-    # Validate the information entered
-    if request.form['role'] == None:
-        return "[x] - Error, role is required!", 201
+@role_route.route("/", methods=["PUT", "PATCH"])
+def update_role():
+    """"""
+    role_id = request.args.get("role_id")
+    data = request.get_json()
 
-    role = db.session.query(Roles).filter_by(role=rolename).one()
+    try:
+        db.session.execute(
+            db.update(Role).where(Role.role_id == role_id).values(data)
+        )
+        db.session.commit()
+        return jsonify(msg="Successfully Updated Role!"), 200
 
-    print(role)
-
-    return "Successfully Updated Role!", 200
+    except SQLAlchemyError as ex:
+        print(str(ex))
+        db.session.rollback()
+        return jsonify(msg="Database error occurred!"), 500
 
 
 # The route that handles role deletion
-@role_route.route("/delete/<rolename>", methods=["DELETE"])
-def delete_role(rolename):
-    return "Successfully Deleted Role!"
-
-
-# The route that handles role signin
-@role_route.route("signin", methods=["POST"])
-def signin_role():
-    rolename = request.form["rolename"]
-    password = request.form["password"]
-
-    role = db.session.execute((db.select(Role)).filter_by(
-        rolename=rolename)).scalar_one()
-
-    print(role)
+@role_route.route("/", methods=["DELETE"])
+def delete_role():
+    """"""
+    role_id = request.args.get("role_id")
 
     try:
-        hashed_pwd = verify_hash(password, confirm_password)
-        checkpw(password, hashed_pwd)
-    except:
-        return "Couldn't Signin!", 201
+        db.session.execute(db.delete(Role).where(Role.role_id == role_id))
+        db.session.commit()
+        return jsonify(msg="Successfully Deleted Role!"), 200
 
-    return "Successfully SignedIn!", 200
+    except sqlalchemy.exc.SQLAlchemyError as ex:
+        print(str(ex))
+        db.session.rollback()
+        return jsonify(msg="Database error occurred!"), 500
