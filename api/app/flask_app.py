@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from .extensions import cors, db, sess, folder_setup
+from .extensions import cors, db, sess, folder_setup,login_manager
 from app.routes import (
     index_route,
     user_route,
@@ -51,6 +51,7 @@ def create_app() -> Flask:
     cors.init_app(app)
     sess.init_app(app)
     folder_setup.init_app(app)  # Set the templates and static directories
+    login_manager.init_app(app)
 
     with app.app_context():
         db.create_all()

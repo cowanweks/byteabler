@@ -27,15 +27,14 @@ def new_user_route():
                 )
             )
             db.session.commit()
-            return True, "Successfully Created new User!"
+            return jsonify("Successfully Created new User!"), 200
 
         else:
-            print(new_user_form.errors)
-            return False, new_user_form.errors
+            return jsonify(new_user_form.errors), 400
 
     except IntegrityError as ex:
         print(ex)
-        return False, "User already exists!"
+        return jsonify("User already exists!"), 400
 
 
 @user_route.route("/<string:user_id>", methods=["GET"])
@@ -84,14 +83,15 @@ def update_user_route(user_id: str):
                 .values(roles=updated_user_form.roles.data)
             )
             db.session.commit()
-            return True, "Successfully Updated User!"
+            return jsonify("Successfully Updated User!"), 200
 
         else:
-            return False, updated_user_form.errors
+            return jsonify(updated_user_form.errors), 500
 
     except SQLAlchemyError as ex:
         print(ex)
-        return False, "Database error occurred!"
+        return jsonify("Database error occurred!"), 500
+
 
 
 @user_route.route("/<string:user_id>", methods=["DELETE"])
@@ -102,18 +102,9 @@ def delete_user_route(user_id: str):
         db.session.execute(db.delete(User).where(User.user_id == user_id))
         db.session.commit()
         db.session.close()
-        return True, "Successfully Deleted User!"
+        return jsonify("Successfully Deleted User!"), 200
 
     except SQLAlchemyError as ex:
         print(ex)
         db.session.close()
-        return False, "Database error occurred!"
-
-
-def signin_user_route():
-    """"""
-    pass
-
-
-def signout_user_route():
-    pass
+        return jsonify("Database error occurred!"), 500

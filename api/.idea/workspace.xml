@@ -4,63 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8136a968-defc-4fc7-8264-483790090e08" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../AUTHORS" beforeDir="false" afterPath="$PROJECT_DIR$/../AUTHORS" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/api.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/db_config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/flask_config.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/flask_config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/flask_app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/class_reps.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/class_reps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/index.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/index.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/roles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/units.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/units.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/utils/login_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/utils/login_utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/conftest.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test_data/good_data.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test_data/good_data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/defined_cases/test_classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/defined_cases/test_classes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/defined_cases/test_classreps.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/defined_cases/test_classreps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/defined_cases/test_roles.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/defined_cases/test_roles.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/defined_cases/test_units.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/defined_cases/test_units.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/unit/defined_cases/test_users.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/unit/defined_cases/test_users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/components.json" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/components.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/postcss.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/postcss.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/components/header/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/components/header/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/components/shadcn/ui/aspect-ratio.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/components/shadcn/ui/button.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/components/sidebar/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/components/sidebar/Sidebar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/ErrorPage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/ErrorPage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/Home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/Home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/Login.tsx" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/Signup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/Signup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/providers/users.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/App.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/styles/App.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/ErrorPage.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/Header.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/Home.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/Login.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/SideBar.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/Signup.scss" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/styles/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/styles/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/utils/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/tailwind.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/tailwind.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/vite.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/vite.config.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/yarn.lock" beforeDir="false" />
-    </list>
+    <list default="true" id="8136a968-defc-4fc7-8264-483790090e08" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,7 +35,7 @@
   "keyToString": {
     "Python.Run Bytabler.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "dev",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/home/cowanweks/Projects/Software/timetabler/api/app/forms",
     "settings.editor.selected.configurable": "configurable.group.appearance"
   }
