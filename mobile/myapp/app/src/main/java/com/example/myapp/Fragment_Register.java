@@ -59,8 +59,8 @@ public class Fragment_Register extends Fragment {
                     data[1] = email;
                     data[2] = password;
                     data[3] = confirm_password;
-//  "http://192.168.1.109/loginregister/signup.php
-                    PutData putData = new PutData("http://10.0.2.2/loginregister/signup.php", "POST", field, data);
+//signup implementation
+                    PutData putData = new PutData("https://byteabler-8c063875d0ca.herokuapp.com/api/v1/signup", "POST", field, data);
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             progressBar.setVisibility(View.GONE);

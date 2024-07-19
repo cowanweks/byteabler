@@ -53,7 +53,7 @@ public class Fragment_login extends Fragment {
                     data[1] = password;
 
                     // Use 10.0.2.2 instead of localhost
-                    PutData putData = new PutData("http://10.0.2.2/loginregister/login.php", "POST", field, data);
+                    PutData putData = new PutData("https://byteabler-8c063875d0ca.herokuapp.com/api/v1/signin", "POST", field, data);
                     if (putData.startPut()) {
                         if (putData.onComplete()) {
                             progressBar.setVisibility(View.GONE);
