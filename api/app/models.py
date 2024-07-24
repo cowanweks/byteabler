@@ -14,7 +14,7 @@ class User(db.Model):
     password = mapped_column(String(255))
     roles = mapped_column(String(25))
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
-    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
@@ -39,7 +39,7 @@ class Staff(db.Model):
     phone_no = mapped_column(String(25))
     email = mapped_column(String(25))
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
-    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
@@ -60,7 +60,7 @@ class Unit(db.Model):
     unit_code = mapped_column(String(25), primary_key=True)
     unit_name = mapped_column(String(25), nullable=False)
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
-    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
@@ -75,7 +75,7 @@ class Class(db.Model):
 
     class_id = mapped_column(String(25), primary_key=True)
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
-    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
     class_rep = relationship('ClassRep', backref="classes", uselist=False)
 
     def serialize(self):
@@ -98,7 +98,7 @@ class ClassRep(db.Model):
     phone_no = mapped_column(String(25), nullable=False)
     email = mapped_column(String(25), nullable=False)
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
-    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
@@ -120,7 +120,7 @@ class Role(db.Model):
     role_name = mapped_column(String(25), unique=True, nullable=False)
     role_description = mapped_column(String(255))
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
-    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
@@ -138,7 +138,7 @@ class UnitAssignment(db.Model):
     unit_id = mapped_column(ForeignKey("units.unit_code"))
     lecturer = mapped_column(ForeignKey("staffs.staff_no"))
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
-    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
 
     # assigned_unit: Mapped["Unit"] = relationship(back_populates="assigned_unit")
     # assigned_class: Mapped["Class"] = relationship(back_populates="assigned_class")
