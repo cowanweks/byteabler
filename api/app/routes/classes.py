@@ -4,55 +4,44 @@ from uuid import uuid4
 import sqlalchemy
 from flask import Blueprint, request, jsonify
 from app.models import db, Class
+from app.forms.classes import ClassRegistrationForm, ClassUpdateForm
 
 
 # Class blueprint
 class_route = Blueprint("class_route", __name__, url_prefix="/api/v1/classes")
 
 
-# The route that handles class registration
 @class_route.route("/", methods=["POST"])
-def new_class():
-    # TODO Form Validation
-    data = request.get_json()
-    class_id = str(uuid4())
-    class_rep = data.get("class_rep")
+def new():
+    """The route that handles class registration"""
+    form = ClassRegistrationForm(request.form)
+
+    if form.validate():
+
+        new_class = Class(class_id=form.classId.data)
+
+        try:
+            db.session.add(new_class)
+            db.session.commit()
+            return jsonify(msg="Successfully Created new Class!"), 201
+
+        except sqlalchemy.exc.IntegrityError as ex:
+            return jsonify("Class Already Exists"), 400
+
+        except sqlalchemy.exc.SQLAlchemyError as ex:
+            return jsonify(msg="Database error occurred!", error=str(ex)), 500
+
+    return jsonify(form.errors), 400
+
+
+@class_route.route("/<string:class_id>", methods=["GET"])
+def get(class_id: str):
+    """A route that handles fetching multiple class"""
 
     try:
-        db.session.add(Class(class_id=class_id, class_rep=class_rep))
-        db.session.commit()
-        return jsonify(msg="Successfully Created new Class!"), 201
+        classes = db.session.query(Class).filter_by(class_id=class_id)
 
-    except sqlalchemy.exc.SQLAlchemyError as e:
-        db.session.rollback()
-        return jsonify(msg="Database error occurred!", error=str(e)), 500
-
-
-# A route that handles fetching multiple class
-@class_route.route("/", methods=["GET"])
-def get_classes():
-    """"""
-    class_id = request.args.get("class_id")
-
-    try:
-        if class_id:
-            classes = (
-                db.session.execute(
-                    db.select(Class)
-                    .where(Class.class_id == class_id)
-                    .order_by(Class.class_id)
-                )
-                .scalars()
-                .all()
-            )
-
-        classes = (
-            db.session.execute(db.select(Class).order_by(Class.class_id))
-            .scalars()
-            .all()
-        )
-
-        serialized_classes = [classs.serialize() for classs in classes]
+        serialized_classes = [_class.serialize() for _class in classes]
         return jsonify(serialized_classes), 200
 
     except sqlalchemy.exc.SQLAlchemyError as e:
@@ -60,10 +49,24 @@ def get_classes():
         return jsonify(msg="Database error occurred!", error=str(e)), 500
 
 
-# The Route that handles class information update
+@class_route.route("/", methods=["GET"])
+def get_classes_route():
+    """A route that handles fetching multiple class"""
+
+    try:
+        classes = db.session.query(Class).all()
+
+        serialized_classes = [_class.serialize() for _class in classes]
+        return jsonify(serialized_classes), 200
+
+    except sqlalchemy.exc.SQLAlchemyError as e:
+        db.session.rollback()
+        return jsonify(msg="Database error occurred!", error=str(e)), 500
+
+
 @class_route.route("/", methods=["PUT", "PATCH"])
-def update_class():
-    """"""
+def update():
+    """The Route that handles class information update"""
     class_id = request.args.get("class_id")
     class_rep = request.form.get("class_rep")
 
@@ -83,7 +86,7 @@ def update_class():
 
 # The route that handles class deletion
 @class_route.route("/", methods=["DELETE"])
-def delete_class():
+def delete():
     """"""
     class_id = request.args.get("class_id")
 

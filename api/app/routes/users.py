@@ -10,22 +10,21 @@ user_route = Blueprint("user_route", __name__, url_prefix="/api/v1/users")
 
 
 @user_route.route("/", methods=["POST"])
-def new_user_route():
+def new():
     """New User"""
 
     try:
         new_user_form = UserRegistrationForm(request.form)
 
         if new_user_form.validate():
-            db.session.execute(
-                db.insert(User).values(
-                    user_id=str(uuid4()),
-                    staff_no=new_user_form.staff_no.data,
-                    username=new_user_form.username.data,
-                    roles=new_user_form.roles.data,
-                    password=hash_password(new_user_form.password.data)
-                )
-            )
+            new_user = User(
+                user_id=str(uuid4()),
+                staff_no=new_user_form.staff_no.data,
+                username=new_user_form.username.data,
+                roles=new_user_form.roles.data,
+                password=hash_password(new_user_form.password.data))
+
+            db.session.add(new_user)
             db.session.commit()
             return jsonify("Successfully Created new User!"), 200
 
@@ -38,7 +37,7 @@ def new_user_route():
 
 
 @user_route.route("/<string:user_id>", methods=["GET"])
-def get_user_route(user_id: str):
+def get(user_id: str):
     """Get the users"""
 
     try:
@@ -55,7 +54,7 @@ def get_user_route(user_id: str):
 
 
 @user_route.route("/", methods=["GET"])
-def get_users_route():
+def get_users():
     """Get the users"""
 
     try:
@@ -70,7 +69,7 @@ def get_users_route():
 
 
 @user_route.route("/<string:user_id>", methods=["PUT", "PATCH"])
-def update_user_route(user_id: str):
+def update(user_id: str):
     """Update User"""
 
     try:
@@ -93,9 +92,8 @@ def update_user_route(user_id: str):
         return jsonify("Database error occurred!"), 500
 
 
-
 @user_route.route("/<string:user_id>", methods=["DELETE"])
-def delete_user_route(user_id: str):
+def delete(user_id: str):
     """Delete User"""
 
     try:

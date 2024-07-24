@@ -1,3 +1,4 @@
+annotated-types==0.7.0
 apispec==6.6.1
 astroid==3.0.3
 bcrypt==4.1.2
@@ -53,6 +54,8 @@ platformdirs==4.2.0
 pluggy==1.4.0
 psycopg2-binary==2.9.9
 pycodestyle==2.11.1
+pydantic==2.8.2
+pydantic_core==2.20.1
 PyJWT==2.8.0
 pylint==3.0.3
 pyparsing==3.1.2

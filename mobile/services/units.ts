@@ -1,4 +1,4 @@
-import { API_URL, Unit } from "src/types";
+import { API_URL, Unit } from "../types";
 
 export async function getUnits(): Promise<Array<Unit>> {
   /**

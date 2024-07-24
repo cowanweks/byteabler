@@ -1,13 +1,16 @@
 {
-  "name": "my-app",
+  "name": "mobile",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo start --android",
+    "android:offline": "expo start --offline",
     "ios": "expo start --ios",
+    "ios:offline": "expo start --ios --offline",
     "web": "expo start --web",
+    "web:offline": "expo start --web --offline",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },
@@ -28,6 +31,7 @@
     "expo-web-browser": "~13.0.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-icons": "^5.2.1",
     "react-native": "0.74.3",
     "react-native-gesture-handler": "~2.16.1",
     "react-native-reanimated": "~3.10.1",

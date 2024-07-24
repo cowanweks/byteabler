@@ -1,7 +1,7 @@
-import StaffList  from "@pages/StaffList"
+import StaffList from "@pages/StaffList"
 import { getStaffs } from "@services/staffs";
 import { useEffect, useState } from "react";
-import { Staff as IStaff } from "@types/index";
+import { Staff as IStaff } from "src/types";
 
 
 export default function Staff() {
@@ -21,6 +21,6 @@ export default function Staff() {
 
 	return (
 		<div className="">
-			<StaffList data={data}/>
+			<StaffList data={data} />
 		</div>)
 }

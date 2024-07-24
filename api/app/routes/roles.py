@@ -13,7 +13,7 @@ role_route = Blueprint("role_route", __name__, url_prefix="/api/v1/roles")
 
 # The route that handles role registration
 @role_route.route("/", methods=["POST"])
-def new_role():
+def new():
     # Get the users identity
 
     # TODO Form Validation
@@ -40,38 +40,39 @@ def new_role():
         return jsonify(msg="Role already exists!"), 400
 
 
-@role_route.route("/", methods=["GET"])
-def get_roles():
+@role_route.route("/<string:role_id>", methods=["GET"])
+def get(role_id: str):
     """Get the Role"""
 
-    role_id = request.args.get("role_id")
-
     try:
-        if role_id:
-            roles = (
-                db.session.execute(
-                    db.select(Role)
-                    .where(Role.role_id == role_id)
-                    .order_by(Role.role_id)
-                )
-                .scalars()
-                .all()
-            )
-        roles = (
-            db.session.execute(db.select(Role).order_by(Role.role_id)).scalars().all()
-        )
+        roles = db.session.query(Role).filter_by(role_id == role_id).all()
+
         serialized_roles = [role.serialize() for role in roles]
         return jsonify(serialized_roles), 200
 
     except SQLAlchemyError as ex:
         print(str(ex))
-        db.session.rollback()
+        return jsonify(msg="Database error occurred!"), 500
+
+
+@role_route.route("/", methods=["GET"])
+def get_roles():
+    """Get Roles"""
+
+    try:
+        roles = db.session.query(Role).all()
+
+        serialized_roles = [role.serialize() for role in roles]
+        return jsonify(serialized_roles), 200
+
+    except SQLAlchemyError as ex:
+        print(str(ex))
         return jsonify(msg="Database error occurred!"), 500
 
 
 # The Route that handles role information update
 @role_route.route("/", methods=["PUT", "PATCH"])
-def update_role():
+def update():
     """"""
     role_id = request.args.get("role_id")
     data = request.get_json()
@@ -91,7 +92,7 @@ def update_role():
 
 # The route that handles role deletion
 @role_route.route("/", methods=["DELETE"])
-def delete_role():
+def delete():
     """"""
     role_id = request.args.get("role_id")
 

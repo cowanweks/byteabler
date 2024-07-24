@@ -1,71 +1,217 @@
-import { Image, StyleSheet, Platform, TextInput } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, FlatList, ListRenderItem } from "react-native";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "@/providers/AuthProvider";
+import SignIn from '@/app/sign-in';
+import { Ionicons, Feather as Feathericons } from "@expo/vector-icons";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome Brian Arek!</ThemedText>
-        <TextInput />
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+interface Class {
+    id: string;
+    name: string;
+    time: string;
 }
 
+interface Feed {
+    id: string;
+    title: string;
+    time: string;
+}
+
+const classesMockData: Class[] = [
+    { id: '1', name: 'Math 101', time: '09:00 AM - 10:00 AM' },
+    { id: '2', name: 'Physics 201', time: '11:00 AM - 12:00 PM' },
+    { id: '3', name: 'Chemistry 301', time: '01:00 PM - 02:00 PM' },
+    { id: '4', name: 'Biology 401', time: '03:00 PM - 04:00 PM' }
+];
+
+const feedMockData: Feed[] = [
+    { id: '1', title: 'Math 101 Re-Scheduled', time: '09:00 AM - 10:00 AM' },
+];
+
+const DashboardPage: React.FC = () => {
+    const { loggedIn } = useAuth();
+    const [classes, setClasses] = useState<Class[]>([]);
+    const [feed, setFeed] = useState<Feed[]>([]);
+
+    useEffect(() => {
+        // Fetch data here and update the state
+        setClasses(classesMockData);
+        setFeed(feedMockData);
+    }, []);
+
+    if (!loggedIn) {
+        return <SignIn />; // Render sign-in screen if not logged in
+    }
+
+    const renderClassItem: ListRenderItem<Class> = ({ item }) => (
+        <View style={styles.classItem}>
+            <View style={styles.classInfo}>
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    columnGap: 8
+                }}>
+                    <Ionicons name="book-outline" size={18} />
+                    <ThemedText style={styles.className}>{item.name}</ThemedText>
+                </View>
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    columnGap: 8
+                }}>
+                    <Ionicons name="time-outline" size={18} />
+                    <ThemedText style={styles.classTime}>{item.time}</ThemedText>
+                </View>
+            </View>
+        </View>
+    );
+    const renderFeedItem: ListRenderItem<Feed> = ({ item }) => (
+        <View style={styles.classItem}>
+            {/* <Ionicons name="book-outline" size={24} color="black" style={styles.icon} /> */}
+            <View style={styles.classInfo}>
+                <ThemedText style={styles.className}>{item.title}</ThemedText>
+                <View style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    columnGap: 8
+                }}>
+                    <Ionicons name="time-outline" size={18} />
+                    <ThemedText style={styles.classTime}>{item.time}</ThemedText>
+                </View>
+            </View>
+        </View>
+    );
+
+    const renderClassSectionHeader = (title: string, icon: React.ReactNode) => (
+        <ThemedView style={styles.section}>
+            <View style={styles.sectionHeader}>
+                {icon}
+                <ThemedText style={styles.sectionTitle}>{title}</ThemedText>
+            </View>
+            <FlatList
+                data={classes}
+                renderItem={renderClassItem}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={styles.classesList}
+                ListEmptyComponent={<ThemedText>No classes available</ThemedText>}
+            />
+        </ThemedView>
+    );
+    const renderFeedSectionHeader = (title: string, icon: React.ReactNode) => (
+        <ThemedView style={styles.section}>
+            <View style={styles.sectionHeader}>
+                {icon}
+                <ThemedText style={styles.sectionTitle}>{title}</ThemedText>
+            </View>
+            <FlatList
+                data={feed}
+                renderItem={renderFeedItem}
+                keyExtractor={(item) => item.id}
+                contentContainerStyle={styles.classesList}
+                ListEmptyComponent={<ThemedText>No classes available</ThemedText>}
+            />
+        </ThemedView>
+    );
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <GestureHandlerRootView style={styles.gestureRootView}>
+                <FlatList
+                    data={[]}
+                    renderItem={() => null}
+                    keyExtractor={() => "header-footer"}
+                    ListHeaderComponent={() => (
+                        <ThemedView style={styles.header}>
+                            <Ionicons name="school-outline" size={24} color="tomato" />
+                            <ThemedText style={styles.headerText}>Dashboard</ThemedText>
+                        </ThemedView>
+                    )}
+                    ListFooterComponent={() => (
+                        <>
+                            {renderClassSectionHeader(
+                                "Today's Classes",
+                                <Ionicons name="calendar-outline" size={20} />
+                            )}
+                            {renderFeedSectionHeader(
+                                "Don't Miss Out",
+                                <Feathericons name="bell" size={20} />
+                            )}
+                        </>
+                    )}
+                    contentContainerStyle={styles.listContainer}
+                />
+            </GestureHandlerRootView>
+        </SafeAreaView>
+    );
+};
+
+export default DashboardPage;
+
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    gestureRootView: {
+        flex: 1,
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        backgroundColor: '#f8f8f8',
+    },
+    headerText: {
+        marginLeft: 8,
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    section: {
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    sectionHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    sectionTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 10,
+    },
+    classesList: {
+        padding: 0,
+    },
+    listContainer: {
+        paddingBottom: 16, // To ensure there's space at the bottom
+    },
+    classItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    icon: {
+        marginRight: 16,
+    },
+    classInfo: {
+        flex: 1,
+    },
+    className: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    classTime: {
+        fontSize: 16,
+        color: '#666',
+    },
 });

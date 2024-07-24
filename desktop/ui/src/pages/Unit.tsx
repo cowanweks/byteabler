@@ -1,6 +1,6 @@
 import UnitList from "@pages/UnitList";
 import { useEffect, useState } from "react";
-import { Unit as IUnit } from "src/types/index";
+import { Unit as IUnit } from "src/types";
 import { getUnits } from "@services/units";
 
 export default function Unit() {

@@ -1,5 +1,5 @@
 import { Table, TableColumnsType } from "antd";
-import { Unit } from "src/types/index";
+import { Unit } from "src/types";
 
 
 const columns: TableColumnsType<Unit> = [

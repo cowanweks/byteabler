@@ -4,7 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8136a968-defc-4fc7-8264-483790090e08" name="Changes" comment="" />
+    <list default="true" id="40c32eda-920d-4f4c-9286-be3ae7f08a7c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/forms/classes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/forms/classrep.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../mobile/eas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/api.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/api.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dbnavigator.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/developer-tools.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/flask_app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/flask_app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/class_reps.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/class_reps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/classes.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/classes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/users.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/gui/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/gui/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/Staff.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/Staff.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/StaffList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/StaffList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/Unit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/Unit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/UnitList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/UnitList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/staffs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/staffs.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/units.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/units.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/users.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/users.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/types/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/app/(tabs)/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/app/(tabs)/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/assets/fonts/SpaceMono-Regular.ttf" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/assets/fonts/SpaceMono-Regular.ttf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/scripts/reset-project.js" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/scripts/reset-project.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -21,33 +52,25 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 6
+  &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2hSEOn77ZdV24lfshbJJ3WxqkUn" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="1" id="Add" />
-  </component>
+  <component name="ProjectId" id="2jU0GzdqUQ7uyFwQcsrKMo8cQLj" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.Run Bytabler.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/cowanweks/Projects/Software/timetabler/api/app/forms",
-    "settings.editor.selected.configurable": "configurable.group.appearance"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.Run App.executor&quot;: &quot;Debug&quot;,
+    &quot;Python.run.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/cowanweks/Projects/Software/Timetablerapplication/api&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.sync&quot;
   }
-}]]></component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/forms" />
-      <recent name="$PROJECT_DIR$/app/routes" />
-    </key>
-  </component>
+}</component>
   <component name="RunManager">
-    <configuration name="Run Bytabler" type="PythonConfigurationType" factoryName="Python">
+    <configuration name="Run App" type="PythonConfigurationType" factoryName="Python">
       <module name="api" />
       <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -74,30 +97,19 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241" />
+        <option value="bundled-python-sdk-975db3bf15a3-31b6be0877a2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.18034.82" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8136a968-defc-4fc7-8264-483790090e08" name="Changes" comment="" />
-      <created>1717579052654</created>
+      <changelist id="40c32eda-920d-4f4c-9286-be3ae7f08a7c" name="Changes" comment="" />
+      <created>1721426256324</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1717579052654</updated>
+      <updated>1721426256324</updated>
     </task>
     <servers />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
 </project>

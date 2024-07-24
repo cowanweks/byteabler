@@ -8,7 +8,7 @@ staff_route = Blueprint("staff_route", __name__, url_prefix="/api/v1/staffs")
 
 
 @staff_route.route("/", methods=["POST"])
-def new_staff_route():
+def new():
     """New Staff"""
 
     try:
@@ -40,7 +40,7 @@ def new_staff_route():
 
 
 @staff_route.get("/<string:unitCode>")
-def get_staff_route(staffNo: str):
+def get(staffNo: str):
     """Get Units"""
 
     try:
@@ -59,7 +59,7 @@ def get_staff_route(staffNo: str):
 
 
 @staff_route.get("/")
-def get_units_route():
+def get_staffs():
     """Get Units"""
 
     try:
@@ -73,7 +73,7 @@ def get_units_route():
 
 
 @staff_route.route("/<string:staffNo>", methods=["PUT", "PATCH"])
-def update_user_route(staffNo: str):
+def update(staffNo: str):
     """Update Unit"""
 
     try:
@@ -97,7 +97,7 @@ def update_user_route(staffNo: str):
 
 
 @staff_route.route("/<string:staffNo>", methods=["DELETE"])
-def delete_user_route(staffNo: str):
+def delete(staffNo: str):
     """Delete Unit"""
 
     try:

@@ -20,7 +20,7 @@ def index():
 
 
 @index_route.route("/signin", methods=["POST"])
-def signin_user():
+def sign_in():
     """The route that handles user signin"""
 
     user_form = UserLoginForm(request.form)
@@ -46,7 +46,7 @@ def signin_user():
 
 
 @index_route.route("/signout", methods=["GET"])
-def signout_user():
+def sign_out():
     """The route that handles user signout"""
 
     return "Logout"

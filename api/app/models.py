@@ -1,84 +1,66 @@
 import datetime
-from uuid import uuid4
-from sqlalchemy.types import DateTime
-from sqlalchemy.orm import mapped_column
+from sqlalchemy import ForeignKey, String, DateTime
+from sqlalchemy.orm import mapped_column, Mapped, relationship
 from .extensions import db
 
 
 class User(db.Model):
     """Model Representing Users"""
+    __tablename__ = "users"
 
-    user_id = mapped_column(db.String, primary_key=True)
-    staff_no = mapped_column(db.String(25), unique=True)
-    username = mapped_column(db.String(25), unique=True, nullable=False)
-    password = mapped_column(db.String(255))
-    roles = mapped_column(db.String(25))
+    user_id = mapped_column(String, primary_key=True)
+    staff_no = mapped_column(ForeignKey("staffs.staff_no"), unique=True)
+    username = mapped_column(String(25), unique=True, nullable=False)
+    password = mapped_column(String(255))
+    roles = mapped_column(String(25))
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
-            "user_id": self.user_id,
-            "staff_no": self.staff_no,
+            "userId": self.user_id,
+            "staffNo": self.staff_no,
             "password": self.password,
             "username": self.username,
             "role": self.roles,
-            "registration_date": self.reg_date,
+            "regDate": self.reg_date
         }
 
 
 class Staff(db.Model):
     """Model Representing Staffs"""
+    __tablename__ = "staffs"
 
-    staff_no = mapped_column(db.String(25), primary_key=True, default=str(uuid4()))
-    first_name = mapped_column(db.String(25), nullable=False)
-    middle_name = mapped_column(db.String(25), nullable=True)
-    last_name = mapped_column(db.String(25), nullable=False)
-    nat_id = mapped_column(db.String(25))
-    phone_no = mapped_column(db.String(25))
-    email = mapped_column(db.String(25))
+    staff_no = mapped_column(String(25), primary_key=True)
+    first_name = mapped_column(String(25), nullable=False)
+    middle_name = mapped_column(String(25), nullable=True)
+    last_name = mapped_column(String(25), nullable=False)
+    nat_id = mapped_column(String(25))
+    phone_no = mapped_column(String(25))
+    email = mapped_column(String(25))
+    reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
-            "staff_no": self.staff_no,
-            "firstname": self.first_name,
-            "middlename": self.middle_name,
-            "lastname": self.last_name,
-            "nationalID": self.nat_id,
+            "staffNo": self.staff_no,
+            "firstName": self.first_name,
+            "middleName": self.middle_name,
+            "lastName": self.last_name,
+            "natId": self.nat_id,
             "phone": self.phone_no,
-            "email": self.email,
-        }
-
-
-class ClassRep(db.Model):
-    """Model Representing Class Reps"""
-
-    classrep_id = mapped_column(db.String, primary_key=True, default=str(uuid4()))
-    reg_no = mapped_column(db.String(25))
-    firstname = mapped_column(db.String(25), nullable=False)
-    middlename = mapped_column(db.String(25), nullable=True)
-    lastname = mapped_column(db.String(25), nullable=False)
-    class_id = mapped_column(db.String(25), nullable=False)
-    phoneno = mapped_column(db.String(25), nullable=False)
-    email = mapped_column(db.String(25), nullable=False)
-
-    def serialize(self):
-        return {
-            "classrep_id": self.classrep_id,
-            "reg_no": self.reg_no,
-            "firstname": self.firstname,
-            "middlename": self.middlename,
-            "lastname": self.lastname,
-            "class_id": self.class_id,
-            "phone": self.phoneno,
             "email": self.email,
         }
 
 
 class Unit(db.Model):
     """Model Representing Units"""
+    __tablename__ = "units"
 
-    unit_code = mapped_column(db.String(25), primary_key=True)
-    unit_name = mapped_column(db.String(25), nullable=False)
+    unit_code = mapped_column(String(25), primary_key=True)
+    unit_name = mapped_column(String(25), nullable=False)
+    reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
@@ -89,29 +71,75 @@ class Unit(db.Model):
 
 class Class(db.Model):
     """Model Representing Classes"""
+    __tablename__ = "classes"
 
-    class_id = mapped_column(db.String(25), primary_key=True)
-    class_name = mapped_column(db.String, default=str(uuid4()))
-    class_rep = mapped_column(db.String(25), nullable=False)
+    class_id = mapped_column(String(25), primary_key=True)
+    reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+    class_rep = relationship('ClassRep', backref="classes", uselist=False)
 
     def serialize(self):
         return {
-            "class_id": self.class_id,
-            "class_rep": self.class_rep,
+            "classId": self.class_id,
+            "classRep": self.class_rep
+        }
+
+
+class ClassRep(db.Model):
+    """Model Representing Class Reps"""
+    __tablename__ = "class_reps"
+
+    reg_no = mapped_column(String(25), primary_key=True)
+    class_id = mapped_column(String,
+                             ForeignKey("classes.class_id", onupdate="CASCADE", ondelete="CASCADE"))
+    first_name = mapped_column(String(25), nullable=False)
+    middle_name = mapped_column(String(25), nullable=True)
+    last_name = mapped_column(String(25), nullable=False)
+    phone_no = mapped_column(String(25), nullable=False)
+    email = mapped_column(String(25), nullable=False)
+    reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+
+    def serialize(self):
+        return {
+            "regNo": self.reg_no,
+            "firstName": self.first_name,
+            "middleName": self.middle_name,
+            "lastName": self.last_name,
+            "phone": self.phone_no,
+            "email": self.email,
+            "class": self.assigned_class
         }
 
 
 class Role(db.Model):
     """Model Representing Roles available to registered users"""
+    __tablename__ = "roles"
 
-    role_id = mapped_column(
-        db.String(25), primary_key=True, nullable=False, default=str(uuid4())
-    )
-    role_name = mapped_column(db.String(25), unique=True, nullable=False)
-    role_description = mapped_column(db.String(255))
+    role_id = mapped_column(String(25), primary_key=True)
+    role_name = mapped_column(String(25), unique=True, nullable=False)
+    role_description = mapped_column(String(255))
+    reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
 
     def serialize(self):
         return {
-            "role_id": self.role_id,
-            "role_name": self.role_name,
+            "roleId": self.role_id,
+            "roleName": self.role_name,
         }
+
+
+class UnitAssignment(db.Model):
+    """Model Representing a Unit"""
+    __tablename__ = "unit_assignment"
+
+    assignment_id = mapped_column(String, primary_key=True)
+    class_id = mapped_column(ForeignKey("classes.class_id"))
+    unit_id = mapped_column(ForeignKey("units.unit_code"))
+    lecturer = mapped_column(ForeignKey("staffs.staff_no"))
+    reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), onupdate=datetime.datetime.now())
+
+    # assigned_unit: Mapped["Unit"] = relationship(back_populates="assigned_unit")
+    # assigned_class: Mapped["Class"] = relationship(back_populates="assigned_class")
+    # assigned_lecturer: Mapped["Staff"] = relationship(back_populates="assigned_lecturer")
