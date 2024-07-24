@@ -9,7 +9,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = mapped_column(String, primary_key=True)
-    staff_no = mapped_column(ForeignKey("staffs.staff_no"), unique=True)
+    staff_no = mapped_column(String, unique=True)
     username = mapped_column(String(25), unique=True, nullable=False)
     password = mapped_column(String(255))
     roles = mapped_column(String(25))

@@ -51,7 +51,7 @@ def create_app() -> Flask:
     cors.init_app(app)
     sess.init_app(app)
     folder_setup.init_app(app)  # Set the templates and static directories
-    login_manager.init_app(app)
+    # login_manager.init_app(app)
 
     with app.app_context():
         db.create_all()
