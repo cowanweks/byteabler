@@ -34,7 +34,7 @@ export default function ClassRepForm() {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className="my-2 px-2 space-y-4">
             <div className="">
-                <h2>UNIT REGISTRATION</h2>
+                <h2>CLASS REP REGISTRATION</h2>
             </div>
             <div>
                 <label htmlFor="regNo">Reg No</label>

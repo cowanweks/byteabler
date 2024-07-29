@@ -107,9 +107,8 @@ class ClassRep(db.Model):
             "firstName": self.first_name,
             "middleName": self.middle_name,
             "lastName": self.last_name,
-            "phone": self.phone_no,
+            "mobileNo": self.phone_no,
             "email": self.email,
-            "class": self.assigned_class
         }
 
 
