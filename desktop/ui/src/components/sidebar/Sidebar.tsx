@@ -1,5 +1,5 @@
 import { useSideBar } from "@providers/index";
-import BrandLogo from "@public/logo.webp"
+import BrandLogo from "@assets/1_WNvTs536S75sZ9Ku2K2nqg.webp"
 import { Link } from "react-router-dom";
 import {
   HiOutlineCog8Tooth as SettingIcon,

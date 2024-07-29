@@ -6,7 +6,7 @@ export async function getUnits(): Promise<Array<Unit>> {
    */
   const response = await fetch(`${API_URL}/v1/units`, { method: "GET" });
 
-  if (!response.ok) {
+  if (response.status != 200) {
     throw Error("HTTP ERROR: " + response.body);
   }
 
