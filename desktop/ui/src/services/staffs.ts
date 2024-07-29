@@ -1,4 +1,4 @@
-import { API_URL, Staff, Response } from "src/types";
+import { API_URL, Staff, Response } from "@/types";
 
 export async function getStaffs(): Promise<Array<Staff>> {
   /**

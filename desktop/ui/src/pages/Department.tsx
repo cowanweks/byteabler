@@ -32,7 +32,7 @@ export default function Department() {
                 className="flex items-center gap-x-2 bg-blue-500 text-white p-2 rounded"
             >
                 <NewIcon size={18} />
-                <span>New Class</span>
+                <span>New Department</span>
             </button>
         </div>
         <ClassList data={data} />

@@ -13,10 +13,11 @@ export type Role = {
 };
 
 export type User = {
-  userId: string;
-  email: string;
+  staffNo: string;
+  userName: string;
   password: string;
-  roles: Array<Role>;
+  roles: string;
+  confirmPassword: string
 };
 
 export type Staff = {

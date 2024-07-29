@@ -21,8 +21,8 @@ class User(db.Model):
             "userId": self.user_id,
             "staffNo": self.staff_no,
             "password": self.password,
-            "username": self.username,
-            "role": self.roles,
+            "userName": self.username,
+            "roles": self.roles,
             "regDate": self.reg_date
         }
 

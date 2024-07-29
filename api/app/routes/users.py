@@ -16,20 +16,20 @@ def new():
     try:
         new_user_form = UserRegistrationForm(request.form)
 
-        if new_user_form.validate():
-            new_user = User(
-                user_id=str(uuid4()),
-                staff_no=new_user_form.staff_no.data,
-                username=new_user_form.username.data,
-                roles=new_user_form.roles.data,
-                password=hash_password(new_user_form.password.data))
-
-            db.session.add(new_user)
-            db.session.commit()
-            return jsonify("Successfully Created new User!"), 200
-
-        else:
+        if not new_user_form.validate():
             return jsonify(new_user_form.errors), 400
+
+        new_user = User(
+            user_id=str(uuid4()),
+            staff_no=new_user_form.staffNo.data,
+            username=new_user_form.userName.data,
+            roles=new_user_form.roles.data,
+            password=hash_password(new_user_form.password.data)
+            )
+
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify("Successfully Created new User!"), 200
 
     except IntegrityError as ex:
         print(ex)

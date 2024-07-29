@@ -10,10 +10,11 @@ import ErrorPage from "./ErrorPage";
 import Task from "./Task";
 import Feed from "./Feed";
 import Class from "./Class";
+import NotFound from "./NotFound";
 
 export {
 	App, Home, SignIn, Signup,
 	ErrorPage, Department, Unit,
 	ClassRep, Setting, Class,
-	Feed, Task
+	Feed, Task, NotFound
 };

@@ -1,4 +1,4 @@
-import { API_URL, Class, Response } from "../types";
+import { API_URL, Class, Response } from "@/types";
 
 export async function getClasses(): Promise<Array<Class>> {
   /**
