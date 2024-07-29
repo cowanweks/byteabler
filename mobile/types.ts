@@ -1,5 +1,4 @@
-// export const API_URL = "http://127.0.0.1:3000/api/v1";
-export const API_URL = "https://byteabler-8c063875d0ca.herokuapp.com/api/v1/";
+export const API_URL = "http://127.0.0.1:3000/api";
 
 export type Role = {
   roleID: string;
@@ -8,7 +7,7 @@ export type Role = {
 
 export type User = {
   userId: string;
-  username: string;
+  email: string;
   password: string;
   roles: Array<Role>;
 };
@@ -41,8 +40,6 @@ export type ClassRep = {
 };
 
 export type Class = {
-  classID: string;
-  year: number;
-  semester: number;
-  ClassRep: ClassRep;
+  classId: string;
+  classRep: string;
 };

@@ -74,9 +74,10 @@ class Class(db.Model):
     __tablename__ = "classes"
 
     class_id = mapped_column(String(25), primary_key=True)
+    class_rep = mapped_column(String, nullable=False)
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
     updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(), onupdate=datetime.datetime.now())
-    class_rep = relationship('ClassRep', backref="classes", uselist=False)
+    # class_rep = relationship('ClassRep', backref="classes", uselist=False)
 
     def serialize(self):
         return {

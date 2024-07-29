@@ -18,7 +18,7 @@ def new():
 
     if form.validate():
 
-        new_class = Class(class_id=form.classId.data)
+        new_class = Class(class_id=form.classId.data, class_rep=form.classRep.data)
 
         try:
             db.session.add(new_class)

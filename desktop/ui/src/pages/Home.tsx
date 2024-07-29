@@ -3,6 +3,6 @@ export default function Home() {
 
 
     return <div id='Home' className="">
-        Hello from home
+        {/* Hello from home */}
     </div>
 }

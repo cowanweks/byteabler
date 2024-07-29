@@ -44,7 +44,7 @@ export default function Header() {
       <button onClick={toggleSideBar} className="flex justify-center items-center w-8 h-8">
         <HideSideBarIcon size={24} />
       </button>}
-    <div className="flex-grow"></div>
+    {/* <div className="flex-grow"></div>
     <label htmlFor="SearchInput" className="flex relative">
       <button className='pointer-events-none absolute top-2 left-2'><SearchIcon className="stroke-gray-400" /></button>
       <input id='SearchInput' type="text" placeholder='Search anything...' className="w-48 h-8 pl-8 bg-gray-200 rounded-l" onFocus={() => {
@@ -54,7 +54,6 @@ export default function Header() {
         <span className="text-xs">⌘</span>K
       </kbd>
     </label>
-    <div className="flex-grow"></div>
-    <button>Hello</button>
+    <div className="flex-grow"></div> */}
   </nav>);
 }

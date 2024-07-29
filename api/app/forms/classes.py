@@ -5,9 +5,11 @@ class ClassRegistrationForm(Form):
     """A form representing Class registration"""
 
     classId = StringField('Class ID', [validators.DataRequired("Class Id is required!")])
+    classRep = StringField('Class Rep', [validators.DataRequired("Class Rep is required!")])
 
 
 class ClassUpdateForm(Form):
     """A form representing Class update"""
 
-    classId: str = StringField('Class Id', [validators.DataRequired("Class ID is required!")])
+    classRep = StringField('Class Rep', [])
+    classId = StringField('Class Id', [])

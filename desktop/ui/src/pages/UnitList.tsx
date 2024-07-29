@@ -24,8 +24,6 @@ export default function UnitList({ data }: { data: Array<Unit> }) {
 		Object.assign(unit, { key: unit.unitCode }),
 	);
 
-	console.log(units)
-
 	return (
 		<Table columns={columns} dataSource={units} />);
 }

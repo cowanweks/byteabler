@@ -40,8 +40,6 @@ export type ClassRep = {
 };
 
 export type Class = {
-  classID: string;
-  year: number;
-  semester: number;
-  ClassRep: ClassRep;
+  classId: string;
+  classRep: string;
 };
