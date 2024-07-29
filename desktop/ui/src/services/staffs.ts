@@ -1,4 +1,4 @@
-import { API_URL, Staff } from "src/types";
+import { API_URL, Staff, Response } from "src/types";
 
 export async function getStaffs(): Promise<Array<Staff>> {
   /**
@@ -31,7 +31,7 @@ export async function getStaffByCode(staffNo: string): Promise<Staff> {
   return filteredStaff[0];
 }
 
-export async function newStaff(staffData: Staff): Promise<boolean> {
+export async function newStaff(staffData: Staff): Promise<Response> {
   /**
    *
    *
@@ -51,11 +51,13 @@ export async function newStaff(staffData: Staff): Promise<boolean> {
     body: form,
   });
 
-  if (!response.ok) {
-    throw Error("HTTP ERROR: " + response.body);
+  const responseData = await response.json();
+
+  if (response.status == 400 || response.status == 500) {
+    throw new Error(`HTTP ERROR: ${responseData}`);
   }
 
-  return true;
+  return {status: response.status, msg: responseData};
 }
 
 export async function updateStaff(

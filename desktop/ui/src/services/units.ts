@@ -1,4 +1,4 @@
-import { API_URL, Unit } from "../types";
+import { API_URL, Unit, Response } from "../types";
 
 export async function getUnits(): Promise<Array<Unit>> {
   /**
@@ -29,7 +29,7 @@ export async function getUnitByCode(unitCode: string): Promise<Unit> {
   return filteredUnit[0];
 }
 
-export async function newUnit(unitData: Unit): Promise<boolean> {
+export async function newUnit(unitData: Unit): Promise<Response> {
   /**
    *
    *
@@ -48,11 +48,13 @@ export async function newUnit(unitData: Unit): Promise<boolean> {
     body: form,
   });
 
-  if (!response.ok) {
-    throw Error("HTTP ERROR: " + response.body);
+  const responseData = await response.json();
+
+  if (response.status == 400 || response.status == 500) {
+    throw new Error(`HTTP ERROR: ${responseData}`);
   }
 
-  return true;
+  return {status: response.status, msg: responseData};
 }
 
 export async function updateUnit(

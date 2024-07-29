@@ -1,4 +1,4 @@
-import { API_URL, Class } from "../types";
+import { API_URL, Class, Response } from "../types";
 
 export async function getClasses(): Promise<Array<Class>> {
   /**
@@ -29,7 +29,7 @@ export async function getClassById(classId: string): Promise<Class> {
   return filteredData[0];
 }
 
-export async function newClass(classData: Class): Promise<boolean> {
+export async function newClass(classData: Class): Promise<Response> {
   /**
    *
    *
@@ -48,11 +48,13 @@ export async function newClass(classData: Class): Promise<boolean> {
     body: form,
   });
 
-  if (response.status != 201) {
-    throw Error("HTTP ERROR: " + response.body);
+  const responseData = await response.json();
+
+  if (response.status == 400 || response.status == 500) {
+    throw new Error(`HTTP ERROR: ${responseData}`);
   }
 
-  return true;
+  return {status: response.status, msg: responseData};
 }
 
 export async function updateClass(

@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { newUnit } from '@services/units'
+import {useToast} from "@providers/index"
 
 // Define the zod schema
 const unitSchema = z.object({
@@ -14,15 +15,25 @@ type Unit = z.infer<typeof unitSchema>;
 
 export default function UnitForm() {
 
+    const {showToast} = useToast()
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Unit>({
         resolver: zodResolver(unitSchema),
     });
 
-    const onSubmit = (data: Unit) => {
+    const onSubmit = async (data: Unit) => {
 
-        if (!newUnit(data)) {
+        const response = await newUnit(data)
+
+        if(response.status == 409){
+
+            showToast('error', "A Unit with this Unit Code already exists!");
+
             return;
         }
+
+        showToast('success', "Successfully Added a new Unit!");
+
 
         reset();
     };

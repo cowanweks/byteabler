@@ -26,7 +26,7 @@ def new():
             return jsonify(msg="Successfully Created new Class!"), 201
 
         except sqlalchemy.exc.IntegrityError as ex:
-            return jsonify("Class Already Exists"), 400
+            return jsonify("Class Already Exists"), 409
 
         except sqlalchemy.exc.SQLAlchemyError as ex:
             return jsonify(msg="Database error occurred!", error=str(ex)), 500

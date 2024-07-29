@@ -8,7 +8,7 @@ class ClassRepRegistrationForm(Form):
     firstName = StringField('FirstName', [validators.DataRequired()])
     middleName = StringField('MiddleName', [validators.DataRequired()])
     lastName = StringField('LastName', [validators.DataRequired()])
-    phoneNo = StringField('Phone No', [validators.DataRequired()])
+    mobileNo = StringField('Phone No', [validators.DataRequired()])
     email = StringField('Email', [validators.DataRequired()])
 
 
@@ -19,5 +19,5 @@ class ClassRepUpdateForm(Form):
     firstname = StringField('FirstName', [validators.DataRequired()])
     middleName = StringField('MiddleName', [validators.DataRequired()])
     lastName = StringField('LastName', [validators.DataRequired()])
-    phoneNo = StringField('Phone No', [validators.DataRequired()])
+    mobileNo = StringField('Phone No', [validators.DataRequired()])
     email = StringField('Email', [validators.DataRequired()])

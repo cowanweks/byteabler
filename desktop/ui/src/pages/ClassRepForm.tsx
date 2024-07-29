@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { newClassRep } from '@services/classreps'
+import {useToast} from "@providers/index"
 
 // Define the zod schema
 const unitSchema = z.object({
@@ -18,15 +19,24 @@ type ClassRep = z.infer<typeof unitSchema>;
 
 export default function ClassRepForm() {
 
+    const {showToast} = useToast()
+
     const { register, handleSubmit, formState: { errors }, reset } = useForm<ClassRep>({
         resolver: zodResolver(unitSchema),
     });
 
-    const onSubmit = (data: ClassRep) => {
+    const onSubmit = async (data: ClassRep) => {
 
-        if (!newClassRep(data)) {
+        const response = await newClassRep(data)
+
+        if(response.status == 409){
+
+            showToast('error', "A ClassRep with this Reg No already exists!");
+
             return;
         }
+
+        showToast('success', "Successfully Added a new ClassRep!");
 
         reset();
     };

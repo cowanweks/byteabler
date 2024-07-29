@@ -3,7 +3,7 @@ import React from 'react';
 import { createRoot } from "react-dom/client"
 import { App, Department, Home, Unit, ClassRep, Setting, Feed, Task, Class } from '@pages/index';
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import { ModalProvider, SideBarProvider, CommandDialogProvider } from "@providers/index"
+import { ModalProvider, SideBarProvider, CommandDialogProvider, ToastProvider } from "@providers/index"
 
 const router = createBrowserRouter([
   {
@@ -60,11 +60,13 @@ createRoot(document.getElementById('root')!).render(
 
   <React.StrictMode>
     <ModalProvider>
-      <SideBarProvider>
-        <CommandDialogProvider>
-          <RouterProvider router={router} />
-        </CommandDialogProvider>
-      </SideBarProvider>
+      <ToastProvider>
+        <SideBarProvider>
+          <CommandDialogProvider>
+            <RouterProvider router={router} />
+          </CommandDialogProvider>
+        </SideBarProvider>
+      </ToastProvider>
     </ModalProvider>
   </React.StrictMode>,
 );

@@ -30,7 +30,7 @@ def new():
 
     except IntegrityError as ex:
         print(ex)
-        return jsonify("Unit already exists!"), 400
+        return jsonify("Unit already exists!"), 409
 
 
 @unit_route.get("/<string:unitCode>")

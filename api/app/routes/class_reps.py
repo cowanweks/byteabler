@@ -27,7 +27,7 @@ def new():
                                  first_name=form.firstName.data,
                                  middle_name=form.middleName.data,
                                  last_name=form.lastName.data,
-                                 phone_no=form.phoneNo.data,
+                                 phone_no=form.mobileNo.data,
                                  email=form.email.data
                                  )
         db.session.add(new_class_rep)
@@ -36,7 +36,7 @@ def new():
         return jsonify("Successfully added new Class Rep!"), 201
 
     except IntegrityError:
-        return jsonify("Class Rep already exists!"), 400
+        return jsonify("Class Rep already exists!"), 409
 
     except SQLAlchemyError as ex:
         return jsonify(msg="Database error occurred!", error=str(ex)), 500

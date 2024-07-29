@@ -33,7 +33,7 @@ def new():
 
     except IntegrityError as ex:
         print(ex)
-        return jsonify("User already exists!"), 400
+        return jsonify("User already exists!"), 409
 
 
 @user_route.route("/<string:user_id>", methods=["GET"])

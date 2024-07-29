@@ -37,7 +37,7 @@ def new():
     except IntegrityError as ex:
         print("{}".format(ex))
         db.session.rollback()
-        return jsonify(msg="Role already exists!"), 400
+        return jsonify(msg="Role already exists!"), 409
 
 
 @role_route.route("/<string:role_id>", methods=["GET"])
