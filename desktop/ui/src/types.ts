@@ -1,5 +1,5 @@
-export const API_URL = "http://127.0.0.1:3000/api";
-// export const API_URL = "https://byteabler-8c063875d0ca.herokuapp.com/api";
+// export const API_URL = "http://127.0.0.1:3000/api";
+export const API_URL = "https://byteabler-8c063875d0ca.herokuapp.com/api";
 
 
 export type Response = {
