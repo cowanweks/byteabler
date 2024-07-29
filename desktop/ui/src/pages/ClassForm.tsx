@@ -33,11 +33,12 @@ export default function ClassRepForm() {
                 <h2>CLASS REGISTRATION</h2>
             </div>
             <div>
-                <label htmlFor="regNo">Reg No</label>
+                <label htmlFor="regNo">Class ID</label>
                 <input
                     id="classId"
                     type="text"
                     {...register('classId')}
+                    placeholder='e.g BTIT-SEP-2020'
                     className="border p-2 rounded w-full"
                 />
                 {errors.classId && <span className="text-red-600">{errors.classId.message}</span>}
@@ -48,6 +49,7 @@ export default function ClassRepForm() {
                     id="classRep"
                     type="text"
                     {...register('classRep')}
+                    placeholder='e.g BTIT/345J/2020'
                     className="border p-2 rounded w-full"
                 />
                 {errors.classRep && <span className="text-red-600">{errors.classRep.message}</span>}
