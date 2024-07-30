@@ -27,49 +27,88 @@ function SideBar() {
       <ul>
         <Tooltip placement="right" title={isCollapsed ? "Home" : ""}>
           <NavLink to="home"
-            style={(state) => console.log(state)}>
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            className="flex items-center gap-x-2 h-10 px-2">
             <DashboardIcon size={24} />
             <li>Home</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Units" : ""}>
-          <NavLink style={(state) => console.log(state)} to="unit" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="unit" className="flex items-center gap-x-2 h-10 px-2">
             <UnitIcon size={24} />
             <li>Units</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Class Reps" : ""}>
-          <NavLink activeClassName='is-active' to="classrep" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="classrep" className="flex items-center gap-x-2 h-10 px-2">
             <ClassrepIcon size={24} />
             <li>Class Reps</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Classes" : ""}>
-          <NavLink activeClassName='is-active' to="class" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="class" className="flex items-center gap-x-2 h-10 px-2">
             <ClassIcon size={24} />
             <li>Classes</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Departments" : ""}>
-          <NavLink activeClassName='is-active' to="department" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="department" className="flex items-center gap-x-2 h-10 px-2">
             <DepartmentIcon size={24} />
             <li>Departments</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Tasks" : ""}>
-          <NavLink activeClassName='is-active' to="task" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="task" className="flex items-center gap-x-2 h-10 px-2">
             <TaskIcon size={24} />
             <li>Tasks</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Feed" : ""}>
-          <NavLink activeClassName='is-active' to="feed" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="feed" className="flex items-center gap-x-2 h-10 px-2">
             <FeedIcon size={24} />
             <li>Feed</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Settings" : ""}>
-          <NavLink activeClassName='is-active' to="setting" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="setting" className="flex items-center gap-x-2 h-10 px-2">
             <SettingIcon size={24} />
             <li>Settings</li>
           </NavLink>
