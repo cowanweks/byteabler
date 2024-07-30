@@ -10,6 +10,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useAuth } from "@/providers/AuthProvider";
 
 export default function SignIn() {
+
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -22,7 +23,7 @@ export default function SignIn() {
         if (username == '') { Alert.alert('Required Field', "UserName is  Required!"); return }
         if (password == '') { Alert.alert('Required Field', "Password is  Required!"); return }
 
-        const response = await signIn({ username: username, password: password });
+        const response = await signIn(username, password);
 
         if (response) {
             Alert.alert('Sign In Successful', 'You have successfully signed in!');

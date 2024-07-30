@@ -7,6 +7,7 @@ export type Role = {
 
 export type User = {
   userId: string;
+  userName: string;
   email: string;
   password: string;
   roles: Array<Role>;

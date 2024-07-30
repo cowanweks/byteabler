@@ -1,6 +1,6 @@
 import { useSideBar } from "@providers/index";
 import BrandLogo from "@assets/1_WNvTs536S75sZ9Ku2K2nqg.webp"
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   HiOutlineCog8Tooth as SettingIcon,
   HiOutlineHomeModern as DepartmentIcon,
@@ -12,7 +12,7 @@ import {
 } from "react-icons/hi2"
 import { PiStudent as ClassrepIcon } from "react-icons/pi";
 import { Tooltip } from "antd";
-
+import './SideBar.scss'
 
 function SideBar() {
 
@@ -26,55 +26,56 @@ function SideBar() {
       <img src={BrandLogo} alt="" className="object-contain my-1 mx-auto border-dashed border-[2px] w-[190px]" />
       <ul>
         <Tooltip placement="right" title={isCollapsed ? "Home" : ""}>
-          <Link to="home" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink to="home"
+            style={(state) => console.log(state)}>
             <DashboardIcon size={24} />
             <li>Home</li>
-          </Link>
+          </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Units" : ""}>
-          <Link to="unit" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink style={(state) => console.log(state)} to="unit" className="flex items-center gap-x-2 h-10 px-2">
             <UnitIcon size={24} />
             <li>Units</li>
-          </Link>
+          </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Class Reps" : ""}>
-          <Link to="classrep" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink activeClassName='is-active' to="classrep" className="flex items-center gap-x-2 h-10 px-2">
             <ClassrepIcon size={24} />
             <li>Class Reps</li>
-          </Link>
+          </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Classes" : ""}>
-          <Link to="class" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink activeClassName='is-active' to="class" className="flex items-center gap-x-2 h-10 px-2">
             <ClassIcon size={24} />
             <li>Classes</li>
-          </Link>
+          </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Departments" : ""}>
-          <Link to="department" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink activeClassName='is-active' to="department" className="flex items-center gap-x-2 h-10 px-2">
             <DepartmentIcon size={24} />
             <li>Departments</li>
-          </Link>
+          </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Tasks" : ""}>
-          <Link to="task" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink activeClassName='is-active' to="task" className="flex items-center gap-x-2 h-10 px-2">
             <TaskIcon size={24} />
             <li>Tasks</li>
-          </Link>
+          </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Feed" : ""}>
-          <Link to="feed" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink activeClassName='is-active' to="feed" className="flex items-center gap-x-2 h-10 px-2">
             <FeedIcon size={24} />
             <li>Feed</li>
-          </Link>
+          </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Settings" : ""}>
-          <Link to="setting" className="flex items-center gap-x-2 h-10 px-2">
+          <NavLink activeClassName='is-active' to="setting" className="flex items-center gap-x-2 h-10 px-2">
             <SettingIcon size={24} />
             <li>Settings</li>
-          </Link>
+          </NavLink>
         </Tooltip>
       </ul>
-    </aside>
+    </aside >
   );
 }
 

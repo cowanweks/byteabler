@@ -28,8 +28,6 @@ export default function UserForm() {
 
     const onSubmit = async (data: User) => {
 
-        console.log(data)
-
         const response = await newUser(data);
 
         if(response.status == 409){
