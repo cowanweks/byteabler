@@ -2,7 +2,10 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { newClass } from '@/services/classes';
-import {useToast} from "@providers/index"
+import { useToast } from "@providers/index"
+import { useEffect, useState } from 'react';
+import { getClassReps } from '@/services/classreps';
+import { ClassRep, Class } from '@/types';
 
 // Define the zod schema
 const classSchema = z.object({
@@ -10,23 +13,35 @@ const classSchema = z.object({
     classRep: z.string().nonempty({ message: 'Class Rep is required' })
 });
 
-type ClassRep = z.infer<typeof classSchema>;
-
 
 export default function ClassRepForm() {
 
-    const {showToast} = useToast()
+    const [classreps, setClassReps] = useState<ClassRep[]>([]);
+    const { showToast } = useToast()
 
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<ClassRep>({
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<Class>({
         resolver: zodResolver(classSchema),
     });
 
-    const onSubmit = async (data: ClassRep) => {
+    useEffect(() => {
+
+        const fetchReps = async () => {
+
+            const response = await getClassReps();
+
+            setClassReps(response)
+        }
+
+        fetchReps()
+
+    })
+
+    const onSubmit = async (data: Class) => {
 
         const response = await newClass(data)
 
-        if(response.status == 409){
+        if (response.status == 409) {
 
             showToast('error', "A Class with this ID already exists!");
 
@@ -56,13 +71,16 @@ export default function ClassRepForm() {
             </div>
             <div>
                 <label htmlFor="classRep">Class Rep</label>
-                <input
-                    id="classRep"
-                    type="text"
+                <select
+                    id="unitCode"
                     {...register('classRep')}
-                    placeholder='e.g BTIT/345J/2020'
                     className="border p-2 rounded w-full"
-                />
+                >
+                    <option value="">Select Class Rep</option>
+                    {classreps.map((classrep) =>
+                        <option key={classrep.regNo} value={classrep.regNo}>{classrep.regNo}</option>
+                    )}
+                </select>
                 {errors.classRep && <span className="text-red-600">{errors.classRep.message}</span>}
             </div>
 

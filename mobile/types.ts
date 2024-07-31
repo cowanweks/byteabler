@@ -4,6 +4,7 @@ export const API_URL = "https://byteabler-8c063875d0ca.herokuapp.com/api";
 export type Response = {
   status: number;
   msg: string;
+  data?: any;
 };
 
 export type Role = {

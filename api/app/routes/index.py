@@ -27,14 +27,15 @@ def sign_in():
 
     try:
         if user_form.validate():
-            user = db.session.query(User).filter_by(username = user_form.username.data).scalar()
+            user = db.session.query(User).filter_by(username=user_form.username.data).scalar()
 
             if user:
                 if verify_password(user_form.password.data, user.password):
                     # Store session
-                    session["email"] = user_form.username.data
+                    session["username"] = user_form.username.data
+                    role = db.session.query(User.roles).filter_by(username=user.username).scalar()
 
-                    return jsonify("Successfully SignedIn!"), 200
+                    return jsonify(msg="Successfully SignedIn!", role=role), 200
 
             return jsonify("Incorrect username or password!"), 401
 

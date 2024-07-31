@@ -21,7 +21,6 @@ def new():
 
         new_user = User(
             user_id=str(uuid4()),
-            staff_no=new_user_form.staffNo.data,
             username=new_user_form.userName.data,
             roles=new_user_form.roles.data,
             password=hash_password(new_user_form.password.data)

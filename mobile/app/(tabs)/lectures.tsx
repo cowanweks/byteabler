@@ -12,14 +12,14 @@ import { getLectures } from "@/services/lectures"
 
 export default function ClassPage() {
 
-    const { loggedIn } = useAuth();
+    const { loggedIn, user, role } = useAuth();
     const [lectures, setLectures] = useState<Lecture[]>([]);
 
     useEffect(() => {
 
         const fetchLectures = async () => {
 
-            const lectures = await getLectures();
+            const lectures = await getLectures({ role: role, user: user, day: undefined });
             setLectures(lectures)
         }
 

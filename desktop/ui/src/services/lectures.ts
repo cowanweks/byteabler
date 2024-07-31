@@ -42,8 +42,6 @@ export async function newLecture(lectureData: Lecture): Promise<Response> {
 
   const form = new FormData();
 
-  console.log(lectureData);
-
   if (lectureData.classId != null) form.append("classId", lectureData.classId);
   if (lectureData.unitCode != null)
     form.append("unitCode", lectureData.unitCode);
@@ -58,8 +56,6 @@ export async function newLecture(lectureData: Lecture): Promise<Response> {
   });
 
   const responseData = await response.json();
-
-  console.log(responseData);
 
   if (response.status == 500) {
     throw new Error(`HTTP ERROR: ${responseData}`);

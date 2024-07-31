@@ -5,7 +5,8 @@ import { newLecture } from '@services/lectures';
 import { useToast } from "@providers/index";
 import { useEffect, useState } from 'react';
 import { getUnits } from '@/services/units';
-
+import { getStaffs } from '@/services/staffs';
+import { Unit, Staff } from '@/types';
 
 // Define the zod schema
 const lectureSchema = z.object({
@@ -19,7 +20,8 @@ const lectureSchema = z.object({
 type Lecture = z.infer<typeof lectureSchema>;
 
 export default function LectureForm() {
-    const [units, setUnits] = useState([]);
+    const [units, setUnits] = useState<Unit[]>([]);
+    const [staffs, setStaffs] = useState<Staff[]>([]);
     const { showToast } = useToast();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Lecture>({
         resolver: zodResolver(lectureSchema),
@@ -35,11 +37,20 @@ export default function LectureForm() {
             setUnits(response)
         }
 
+        const fetchStaffs = async () => {
+
+            const response = await getStaffs();
+
+            setStaffs(response)
+        }
+
         fetchUnits()
+        fetchStaffs()
 
     })
 
     const onSubmit = async (data: Lecture) => {
+
         const response = await newLecture(data);
 
         if (response.status === 400) {
@@ -68,12 +79,16 @@ export default function LectureForm() {
             </div>
             <div>
                 <label htmlFor="unitCode">Unit Code</label>
-                <input
+                <select
                     id="unitCode"
-                    type="text"
                     {...register('unitCode')}
                     className="border p-2 rounded w-full"
-                />
+                >
+                    <option value="">Select Unit</option>
+                    {units.map((unit) =>
+                        <option key={unit.unitCode} value={unit.unitCode}>{unit.unitCode}</option>
+                    )}
+                </select>
                 {errors.unitCode && <span className="text-red-600">{errors.unitCode.message}</span>}
             </div>
             <div>
@@ -84,21 +99,28 @@ export default function LectureForm() {
                     className="border p-2 rounded w-full"
                 >
                     <option value="">Select Lecturer</option>
-                    <option value="lucy">Lucy</option>
-                    <option value="john">John</option>
-                    {/* Add more options as needed */}
+                    {staffs.map((staff) =>
+                        <option key={staff.staffNo} value={staff.staffNo}>{staff.staffNo}</option>
+                    )}
                 </select>
                 {errors.lecturer && <span className="text-red-600">{errors.lecturer.message}</span>}
             </div>
             <div>
                 <label htmlFor="weekDay">Day</label>
-                <input
+                <select
                     id="weekDay"
-                    type="text"
                     {...register('weekDay')}
-                    placeholder="e.g., Wednesday"
                     className="border p-2 rounded w-full"
-                />
+                >
+                    <option value="">Select Lecture Day</option>
+                    <option value="Monday">Monday</option>
+                    <option value="Tuesday">Tuesday</option>
+                    <option value="Wednesday">Wednesday</option>
+                    <option value="Thursday">Thursday</option>
+                    <option value="Friday">Friday</option>
+                    <option value="Saturday">Monday</option>
+                    <option value="Sunday">Sunday</option>
+                </select>
                 {errors.weekDay && <span className="text-red-600">{errors.weekDay.message}</span>}
             </div>
             <div>

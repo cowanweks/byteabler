@@ -9,7 +9,6 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = mapped_column(String, primary_key=True)
-    staff_no = mapped_column(String, unique=True)
     username = mapped_column(String(25), unique=True, nullable=False)
     password = mapped_column(String(255))
     roles = mapped_column(String(25))
@@ -19,7 +18,6 @@ class User(db.Model):
     def serialize(self):
         return {
             "userId": self.user_id,
-            "staffNo": self.staff_no,
             "password": self.password,
             "userName": self.username,
             "roles": self.roles,

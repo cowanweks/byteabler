@@ -4,7 +4,6 @@ from wtforms import Form, StringField, PasswordField, validators, FieldList
 class UserRegistrationForm(Form):
     """A form representing User registration"""
 
-    staffNo = StringField('staff_no', [validators.DataRequired("Staff Number is required!")])
     userName = StringField('username', [validators.DataRequired("Username is required!")])
     password = PasswordField('password', [validators.DataRequired("Password is required!"),
                                           validators.EqualTo('confirmPassword', "Password don't match!")])

@@ -8,12 +8,12 @@ const columns: TableColumnsType<User> = [
         dataIndex: "userName"
     },
     {
-        title: "Staff No",
-        dataIndex: "staffNo"
-    },
-    {
         title: "Roles",
         dataIndex: "roles"
+    },
+    {
+        title: "Registration Date",
+        dataIndex: "regDate"
     }
 ];
 

@@ -43,6 +43,7 @@ export async function signIn(
 
   return {
     status: response.status,
-    msg: responseData,
+    msg: responseData.msg,
+    data: responseData,
   };
 }

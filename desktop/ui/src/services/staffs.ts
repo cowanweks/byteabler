@@ -12,8 +12,6 @@ export async function getStaffs(): Promise<Array<Staff>> {
 
   const data: Array<Staff> = await response.json();
 
-  console.log(data);
-
   return data;
 }
 
@@ -57,7 +55,7 @@ export async function newStaff(staffData: Staff): Promise<Response> {
     throw new Error(`HTTP ERROR: ${responseData}`);
   }
 
-  return {status: response.status, msg: responseData};
+  return { status: response.status, msg: responseData };
 }
 
 export async function updateStaff(

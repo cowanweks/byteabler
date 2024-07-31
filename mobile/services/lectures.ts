@@ -1,10 +1,31 @@
 import { API_URL, Lecture, Response } from "@/types";
 
-export async function getLectures(): Promise<Array<Lecture>> {
+export async function getLectures(options: {
+  user: string;
+  role: string;
+  day: string | undefined;
+}): Promise<Array<Lecture>> {
   /**
    *
    */
-  const response = await fetch(`${API_URL}/v1/lectures`, { method: "GET" });
+
+  let template: string = ``;
+
+  if (options.role == "Lecturer") {
+    template = template.concat(`?staffNo=${options.user}`);
+  }
+
+  if (options.role == "ClassRep") {
+    template = template.concat(`?regNo=${options.user}`);
+  }
+
+  if (options.day != undefined) {
+    template = template.concat(`&day=${options.day}`);
+  }
+
+  const response = await fetch(`${API_URL}/v1/lectures${template}`, {
+    method: "GET",
+  });
 
   if (response.status != 200) {
     throw Error("HTTP ERROR: " + response.body);
@@ -15,14 +36,17 @@ export async function getLectures(): Promise<Array<Lecture>> {
   return data;
 }
 
-export async function getLectureByCode(lectureId: string): Promise<Lecture> {
+export async function getLectureByCode(
+  lectureId: string,
+  options: { user: string; role: string; day: string }
+): Promise<Lecture> {
   /**
    *
    *
    * @export
    * @return {*}  {Promise<Lecture>}
    */
-  const lectures: Array<Lecture> = await getLectures();
+  const lectures: Array<Lecture> = await getLectures(options);
 
   const filteredLecture = lectures.filter(
     (lecture) => lecture.lectureId == lectureId
@@ -41,8 +65,6 @@ export async function newLecture(lectureData: Lecture): Promise<Response> {
    */
 
   const form = new FormData();
-
-  console.log(lectureData);
 
   if (lectureData.classId != null) form.append("classId", lectureData.classId);
   if (lectureData.unitCode != null)

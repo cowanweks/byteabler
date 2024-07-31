@@ -1,26 +1,66 @@
 import uuid
-import sqlalchemy
-from flask import Blueprint, request, jsonify
-from app.models import db, Lecture
+from flask import Blueprint, request, jsonify, session
+from app.models import db, Lecture, Class
 from app.forms.lecture import LectureRegForm
+import datetime
+import requests
 
 # Class blueprint
 lecture_route = Blueprint("lecture_route", __name__, url_prefix="/api/v1/lectures")
 
 
 @lecture_route.get("/")
-def get_lectures_route():
+def get_lectures_by_user_route():
     """"""
+    staff_no = request.args.get('staffNo')
+    reg_no = request.args.get('regNo')
+    day = request.args.get('day')
 
-    try:
-        lectures = db.session.query(Lecture).order_by(Lecture.lecture_id).all()
+    dt = datetime.datetime.now()
+    weekday = dt.strftime("%A")
 
-        serialized_lectures = [lecture.serialize() for lecture in lectures]
+    if not staff_no and not reg_no:
+        #
+        try:
+            lectures = db.session.query(Lecture).order_by(Lecture.lecture_id).all()
+
+            serialized_lectures = [_lecture.serialize() for _lecture in lectures]
+            return jsonify(serialized_lectures), 200
+
+        except Exception as ex:
+            print(ex)
+            return jsonify(str(ex)), 500
+
+    if staff_no and not reg_no:
+
+        if (day is not None) and (day == 'today'):
+            # Fetch today's lectures
+            lectures = (db.session.query(Lecture).filter_by(lecturer=staff_no, week_day=weekday)
+                        .order_by(Lecture.lecture_id).all())
+        else:
+            # Fetch All upcoming lectures
+            lectures = (db.session.query(Lecture).filter_by(lecturer=staff_no)
+                        .order_by(Lecture.lecture_id).all())
+
+        serialized_lectures = [_lecture.serialize() for _lecture in lectures]
         return jsonify(serialized_lectures), 200
 
-    except Exception as ex:
-        print(ex)
-        return jsonify(str(ex)), 500
+    if reg_no and not staff_no:
+        #
+        class_id = db.session.query(Class.class_id).filter_by(class_rep=reg_no).scalar()
+
+        if not class_id:
+            return jsonify("Class {} not found".format(class_id))
+
+        if (day is not None) and (day == 'today'):
+            lectures = (db.session.query(Lecture).filter_by(class_id=class_id, week_day=weekday)
+                        .order_by(Lecture.lecture_id).all())
+
+        else:
+            lectures = (db.session.query(Lecture).filter_by(class_id=class_id).order_by(Lecture.lecture_id).all())
+
+        serialized_lectures = [_lecture.serialize() for _lecture in lectures]
+        return jsonify(serialized_lectures), 200
 
 
 @lecture_route.post("/")

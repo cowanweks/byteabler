@@ -12,10 +12,10 @@ export type Role = {
 };
 
 export type User = {
-  staffNo: string;
   userName: string;
-  password: string;
   roles: string;
+  regDate?: string;
+  password: string;
   confirmPassword: string;
 };
 

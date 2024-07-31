@@ -45,7 +45,7 @@ export default function TabsLayout() {
                             iconName = focused ? 'apps' : 'apps-outline';
                         } else if (route.name === 'feed') {
                             iconName = focused ? 'send' : 'send-outline';
-                        } else if (route.name === 'classes') {
+                        } else if (route.name === 'lectures') {
                             iconName = focused ? 'albums' : 'albums-outline';
                         } else if (route.name === 'setting') {
                             iconName = focused ? 'cog' : 'cog-outline';
@@ -65,9 +65,9 @@ export default function TabsLayout() {
                     headerShown: false,
                     tabBarLabel: "Feed",
                 }} />
-                <Tabs.Screen name="classes" options={{
+                <Tabs.Screen name="lectures" options={{
                     headerShown: false,
-                    tabBarLabel: "Classes",
+                    tabBarLabel: "Lectures",
                 }} />
                 <Tabs.Screen name='setting' options={{
                     headerShown: false,

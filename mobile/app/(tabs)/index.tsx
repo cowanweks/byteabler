@@ -10,13 +10,10 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Lecture, Feed } from "@/types";
 import { getLectures } from "@/services/lectures";
 
-const feedMockData: Feed[] = [
-    { id: '1', title: 'Math 101 Re-Scheduled', time: '09:00 AM - 10:00 AM' },
-];
 
 const DashboardPage: React.FC = () => {
 
-    const { loggedIn } = useAuth();
+    const { loggedIn, user, role } = useAuth();
     const [feed, setFeed] = useState<Feed[]>([]);
     const [lectures, setLectures] = useState<Lecture[]>([]);
 
@@ -24,7 +21,8 @@ const DashboardPage: React.FC = () => {
 
         const fetchLectures = async () => {
 
-            const lectures = await getLectures();
+            const lectures = await getLectures({ role: role, user: user, day: 'today' });
+
             setLectures(lectures)
         }
 
@@ -35,6 +33,7 @@ const DashboardPage: React.FC = () => {
     if (!loggedIn) {
         return <SignIn />; // Render sign-in screen if not logged in
     }
+
 
     const renderClassItem: ListRenderItem<Lecture> = ({ item }) => (
         <View style={styles.classItem}>

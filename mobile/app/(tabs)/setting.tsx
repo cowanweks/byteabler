@@ -7,8 +7,11 @@ import { useAuth } from "@/providers/AuthProvider";
 import SignIn from '@/app/sign-in';
 import { Ionicons } from "@expo/vector-icons";
 import { useState } from 'react';
+import { useTheme } from '@react-navigation/native';
+
 
 const Setting: React.FC = () => {
+    const { dark } = useTheme()
     const { loggedIn, setLoggedIn } = useAuth();
     const [notificationsEnabled, setNotificationsEnabled] = useState(true);
     const [darkTheme, setDarkTheme] = useState(false);

@@ -15,7 +15,7 @@ export default function SignIn() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    const { setLoggedIn } = useAuth()
+    const { setLoggedIn, setUser, setRole } = useAuth()
 
 
     const handleSignIn = async () => {
@@ -28,6 +28,8 @@ export default function SignIn() {
         if (response.status == 200) {
             Alert.alert('Sign In Successful', 'You have successfully signed in!');
             setLoggedIn(true);
+            setUser(username);
+            setRole(response?.data?.role)
             router.push("(tabs)");
 
         } else if (response.status == 401) {

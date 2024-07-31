@@ -7,7 +7,6 @@ import {useToast} from "@providers/index"
 // Define the zod schema
 const classSchema = z.object({
 
-  staffNo: z.string().nonempty({ message: 'Staff No ID is required' }),
   userName: z.string().nonempty({ message: 'UserName ID is required' }),
   password: z.string().nonempty({ message: 'Password is required' }),
   confirmPassword: z.string().nonempty({ message: 'Role is required' }),
@@ -32,7 +31,7 @@ export default function UserForm() {
 
         if(response.status == 409){
 
-            showToast('error', "A User with this userName or Staff No already exists!");
+            showToast('error', "A User with this userName already exists!");
 
             return;
         }
@@ -46,17 +45,6 @@ export default function UserForm() {
         <form onSubmit={handleSubmit(onSubmit)} className="my-2 px-2 space-y-4">
             <div className="">
                 <h2>USER REGISTRATION</h2>
-            </div>
-            <div>
-                <label htmlFor="staffNo">Staff No</label>
-                <input
-                    id="staffNo"
-                    type="text"
-                    {...register('staffNo')}
-                    placeholder='Staff No'
-                    className="border p-2 rounded w-full"
-                />
-                {errors.staffNo && <span className="text-red-600">{errors.staffNo.message}</span>}
             </div>
             <div>
                 <label htmlFor="userName">User Name</label>
