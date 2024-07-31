@@ -1,6 +1,5 @@
 """ """
 
-from uuid import uuid4
 import sqlalchemy
 from flask import Blueprint, request, jsonify
 from app.models import db, Class

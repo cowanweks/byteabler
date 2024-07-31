@@ -5,3 +5,4 @@ from .classes import class_route
 from .units import unit_route
 from .staffs import staff_route
 from .class_reps import class_rep_route
+from .lectures import lecture_route

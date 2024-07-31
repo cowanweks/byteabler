@@ -1,5 +1,5 @@
 import datetime
-from sqlalchemy import ForeignKey, String, DateTime
+from sqlalchemy import ForeignKey, String, DateTime, Time
 from sqlalchemy.orm import mapped_column, Mapped, relationship
 from .extensions import db
 
@@ -143,3 +143,37 @@ class UnitAssignment(db.Model):
     # assigned_unit: Mapped["Unit"] = relationship(back_populates="assigned_unit")
     # assigned_class: Mapped["Class"] = relationship(back_populates="assigned_class")
     # assigned_lecturer: Mapped["Staff"] = relationship(back_populates="assigned_lecturer")
+
+    def serialize(self):
+        return {
+            "assignment_id": self.assignment_id
+        }
+
+
+class Lecture(db.Model):
+    """Model Representing every day lectures"""
+    __tablename__ = "lectures"
+
+    lecture_id = mapped_column(String, primary_key=True)
+    class_id = mapped_column(String, ForeignKey("classes.class_id"))
+    unit_code = mapped_column(String, nullable=False)
+    lecturer = mapped_column(String, ForeignKey("staffs.staff_no"), nullable=False)
+    week_day = mapped_column(String, nullable=False)
+    time = mapped_column(String, nullable=False)
+    reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
+    updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(),
+                               onupdate=datetime.datetime.now())
+
+    # assigned_lecturer: Mapped["Staff"] = relationship(back_populates="assigned_lecturer")
+
+    def serialize(self):
+
+        return {
+            "lectureId": self.lecture_id,
+            "classId": self.class_id,
+            "unitCode": self.unit_code,
+            "unitName": db.session.query(Unit.unit_name).filter_by(unit_code=self.unit_code).scalar(),
+            "lecturer": self.lecturer,
+            "weekDay": self.week_day,
+            "time": self.time
+        }

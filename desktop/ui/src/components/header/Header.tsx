@@ -39,10 +39,10 @@ export default function Header() {
   return (<nav id="Header" className="flex items-center gap-x-4 px-1 bg-gray-100">
     {isCollapsed ?
       <button onClick={toggleSideBar} className="flex justify-center items-center w-8 h-8">
-        <ShowSideBarIcon size={24} />
+        <HideSideBarIcon size={24} />
       </button> :
       <button onClick={toggleSideBar} className="flex justify-center items-center w-8 h-8">
-        <HideSideBarIcon size={24} />
+        <ShowSideBarIcon size={24} />
       </button>}
     {/* <div className="flex-grow"></div>
     <label htmlFor="SearchInput" className="flex relative">

@@ -1,5 +1,6 @@
 import App from "./App";
 import Unit from "./Unit";
+import Lecture from "./Lecture";
 import ClassRep from "./ClassRep";
 import Setting from "./Setting";
 import Home from "./Home";
@@ -13,8 +14,18 @@ import Class from "./Class";
 import NotFound from "./NotFound";
 
 export {
-	App, Home, SignIn, Signup,
-	ErrorPage, Department, Unit,
-	ClassRep, Setting, Class,
-	Feed, Task, NotFound
+  App,
+  Home,
+  SignIn,
+  Signup,
+  ErrorPage,
+  Department,
+  Unit,
+  Lecture,
+  ClassRep,
+  Setting,
+  Class,
+  Feed,
+  Task,
+  NotFound,
 };

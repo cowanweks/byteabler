@@ -1,7 +1,7 @@
 import '@styles/index.scss';
 import React from 'react';
 import { createRoot } from "react-dom/client"
-import { App, Department, Home, Unit, ClassRep, Setting, Feed, Task, Class, NotFound } from '@pages/index';
+import { App, Department, Home, Unit, Lecture, ClassRep, Setting, Feed, Task, Class, NotFound } from '@pages/index';
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { ModalProvider, SideBarProvider, CommandDialogProvider, ToastProvider } from "@providers/index"
 
@@ -29,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "unit",
         element: <Unit />
+      },
+      {
+        path: "lecture",
+        element: <Lecture />
       },
       {
         path: "feed",

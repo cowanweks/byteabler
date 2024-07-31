@@ -1,6 +1,6 @@
 import { useSideBar } from "@providers/index";
 import BrandLogo from "@assets/1_WNvTs536S75sZ9Ku2K2nqg.webp"
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   HiOutlineCog8Tooth as SettingIcon,
   HiOutlineHomeModern as DepartmentIcon,
@@ -45,6 +45,17 @@ function SideBar() {
             to="unit" className="flex items-center gap-x-2 h-10 px-2">
             <UnitIcon size={24} />
             <li>Units</li>
+          </NavLink>
+        </Tooltip>
+        <Tooltip placement="right" title={isCollapsed ? "Lectures" : ""}>
+          <NavLink
+            style={(state) => ({
+              color: state.isActive ? '#fff' : '#545e6f',
+              background: state.isActive ? '#7600dc' : '#f0f0f0',
+            })}
+            to="lecture" className="flex items-center gap-x-2 h-10 px-2">
+            <UnitIcon size={24} />
+            <li>Lectures</li>
           </NavLink>
         </Tooltip>
         <Tooltip placement="right" title={isCollapsed ? "Class Reps" : ""}>

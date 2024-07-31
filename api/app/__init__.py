@@ -9,6 +9,7 @@ from app.routes import (
     staff_route,
     class_route,
     class_rep_route,
+    lecture_route
 )  # Routes
 from app.errors.error_handlers import not_found  # Error Handlers
 from app.config import ProductionConfig, DevelopmentConfig, TestingConfig
@@ -42,6 +43,7 @@ def create_app() -> Flask:
     app.register_blueprint(unit_route)
     app.register_blueprint(staff_route)
     app.register_blueprint(class_route)
+    app.register_blueprint(lecture_route)
     app.register_blueprint(class_rep_route)
 
     # Register error handlers

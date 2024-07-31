@@ -1,4 +1,4 @@
-from wtforms import Form, StringField, validators, FieldList
+from wtforms import Form, StringField, validators
 
 
 class UnitRegistrationForm(Form):
