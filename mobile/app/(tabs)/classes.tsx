@@ -6,37 +6,32 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useAuth } from "@/providers/AuthProvider";
 import SignIn from '@/app/sign-in';
+import { Lecture } from "@/types"
+import { getLectures } from "@/services/lectures"
 
-interface Class {
-    id: string;
-    name: string;
-    time: string;
-}
-
-const classesMockData: Class[] = [
-    { id: '1', name: 'Math 101', time: '09:00 AM - 10:00 AM' },
-    { id: '2', name: 'Physics 201', time: '11:00 AM - 12:00 PM' },
-    { id: '3', name: 'Chemistry 301', time: '01:00 PM - 02:00 PM' },
-    { id: '4', name: 'Biology 401', time: '03:00 PM - 04:00 PM' }
-];
 
 export default function ClassPage() {
 
     const { loggedIn } = useAuth();
-    const [classes, setClasses] = useState<Class[]>([]);
+    const [lectures, setLectures] = useState<Lecture[]>([]);
 
     useEffect(() => {
-        // Fetch data here and update the state
-        // Example: fetchClasses();
-        // For now, we will use mock data
-        setClasses(classesMockData);
+
+        const fetchLectures = async () => {
+
+            const lectures = await getLectures();
+            setLectures(lectures)
+        }
+
+        fetchLectures();
+
     }, []);
 
     if (!loggedIn) {
         return <SignIn />; // Render sign-in screen if not logged in
     }
 
-    const renderClassItem: ListRenderItem<Class> = ({ item }) => (
+    const renderClassItem: ListRenderItem<Lecture> = ({ item }) => (
         <View style={styles.classItem}>
             <View style={{
                 display: 'flex',
@@ -45,7 +40,8 @@ export default function ClassPage() {
                 columnGap: 8
             }}>
                 <Ionicons name="book-outline" size={18} />
-                <ThemedText style={styles.className}>{item.name}</ThemedText>
+                <ThemedText style={styles.className}>{item.unitCode}</ThemedText>
+                <ThemedText style={styles.className}>{item.unitName}</ThemedText>
             </View>
             <View style={{
                 display: 'flex',
@@ -66,9 +62,9 @@ export default function ClassPage() {
                 <ThemedText style={styles.headerText}>Upcoming Classes</ThemedText>
             </ThemedView>
             <FlatList
-                data={classes}
+                data={lectures}
                 renderItem={renderClassItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.lectureId}
                 contentContainerStyle={styles.classesList}
             />
         </SafeAreaView>

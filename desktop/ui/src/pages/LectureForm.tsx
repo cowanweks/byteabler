@@ -1,8 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { newLecture } from '@services/lectures'
-import { useToast } from "@providers/index"
+import { newLecture } from '@services/lectures';
+import { useToast } from "@providers/index";
+import { useEffect, useState } from 'react';
+import { getUnits } from '@/services/units';
+
 
 // Define the zod schema
 const lectureSchema = z.object({
@@ -15,29 +18,36 @@ const lectureSchema = z.object({
 
 type Lecture = z.infer<typeof lectureSchema>;
 
-
-export default function LecttureForm() {
-
-    const { showToast } = useToast()
-
+export default function LectureForm() {
+    const [units, setUnits] = useState([]);
+    const { showToast } = useToast();
     const { register, handleSubmit, formState: { errors }, reset } = useForm<Lecture>({
         resolver: zodResolver(lectureSchema),
     });
 
+
+    useEffect(() => {
+
+        const fetchUnits = async () => {
+
+            const response = await getUnits();
+
+            setUnits(response)
+        }
+
+        fetchUnits()
+
+    })
+
     const onSubmit = async (data: Lecture) => {
+        const response = await newLecture(data);
 
-        const response = await newLecture(data)
-
-        if (response.status == 409) {
-
-            showToast('error', "A Unit with this Unit Code already exists!");
-
+        if (response.status === 400) {
+            showToast('error', "Please make sure all fields are provided and in the required format");
             return;
         }
 
-        showToast('success', "Successfully Added a new Unit!");
-
-
+        showToast('success', response.msg);
         reset();
     };
 
@@ -68,12 +78,16 @@ export default function LecttureForm() {
             </div>
             <div>
                 <label htmlFor="lecturer">Lecturer</label>
-                <input
+                <select
                     id="lecturer"
-                    type="text"
                     {...register('lecturer')}
                     className="border p-2 rounded w-full"
-                />
+                >
+                    <option value="">Select Lecturer</option>
+                    <option value="lucy">Lucy</option>
+                    <option value="john">John</option>
+                    {/* Add more options as needed */}
+                </select>
                 {errors.lecturer && <span className="text-red-600">{errors.lecturer.message}</span>}
             </div>
             <div>
@@ -82,6 +96,7 @@ export default function LecttureForm() {
                     id="weekDay"
                     type="text"
                     {...register('weekDay')}
+                    placeholder="e.g., Wednesday"
                     className="border p-2 rounded w-full"
                 />
                 {errors.weekDay && <span className="text-red-600">{errors.weekDay.message}</span>}
@@ -92,11 +107,11 @@ export default function LecttureForm() {
                     id="time"
                     type="text"
                     {...register('time')}
+                    placeholder="e.g., 8:00"
                     className="border p-2 rounded w-full"
                 />
                 {errors.time && <span className="text-red-600">{errors.time.message}</span>}
             </div>
-
             <button type="submit" className="bg-blue-500 text-white p-2 rounded">
                 Submit
             </button>

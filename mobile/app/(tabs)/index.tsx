@@ -7,46 +7,36 @@ import { useAuth } from "@/providers/AuthProvider";
 import SignIn from '@/app/sign-in';
 import { Ionicons, Feather as Feathericons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
-interface Class {
-    id: string;
-    name: string;
-    time: string;
-}
-
-interface Feed {
-    id: string;
-    title: string;
-    time: string;
-}
-
-const classesMockData: Class[] = [
-    { id: '1', name: 'Math 101', time: '09:00 AM - 10:00 AM' },
-    { id: '2', name: 'Physics 201', time: '11:00 AM - 12:00 PM' },
-    { id: '3', name: 'Chemistry 301', time: '01:00 PM - 02:00 PM' },
-    { id: '4', name: 'Biology 401', time: '03:00 PM - 04:00 PM' }
-];
+import { Lecture, Feed } from "@/types";
+import { getLectures } from "@/services/lectures";
 
 const feedMockData: Feed[] = [
     { id: '1', title: 'Math 101 Re-Scheduled', time: '09:00 AM - 10:00 AM' },
 ];
 
 const DashboardPage: React.FC = () => {
+
     const { loggedIn } = useAuth();
-    const [classes, setClasses] = useState<Class[]>([]);
     const [feed, setFeed] = useState<Feed[]>([]);
+    const [lectures, setLectures] = useState<Lecture[]>([]);
 
     useEffect(() => {
-        // Fetch data here and update the state
-        setClasses(classesMockData);
-        setFeed(feedMockData);
+
+        const fetchLectures = async () => {
+
+            const lectures = await getLectures();
+            setLectures(lectures)
+        }
+
+        fetchLectures();
+
     }, []);
 
     if (!loggedIn) {
         return <SignIn />; // Render sign-in screen if not logged in
     }
 
-    const renderClassItem: ListRenderItem<Class> = ({ item }) => (
+    const renderClassItem: ListRenderItem<Lecture> = ({ item }) => (
         <View style={styles.classItem}>
             <View style={styles.classInfo}>
                 <View style={{
@@ -56,7 +46,8 @@ const DashboardPage: React.FC = () => {
                     columnGap: 8
                 }}>
                     <Ionicons name="book-outline" size={18} />
-                    <ThemedText style={styles.className}>{item.name}</ThemedText>
+                    <ThemedText style={styles.className}>{item.unitCode}</ThemedText>
+                    <ThemedText style={styles.className}>{item.unitName}</ThemedText>
                 </View>
                 <View style={{
                     display: 'flex',
@@ -95,11 +86,11 @@ const DashboardPage: React.FC = () => {
                 <ThemedText style={styles.sectionTitle}>{title}</ThemedText>
             </View>
             <FlatList
-                data={classes}
+                data={lectures}
                 renderItem={renderClassItem}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item.lectureId}
                 contentContainerStyle={styles.classesList}
-                ListEmptyComponent={<ThemedText>No classes available</ThemedText>}
+                ListEmptyComponent={<ThemedText>No classes today!</ThemedText>}
             />
         </ThemedView>
     );
@@ -114,7 +105,7 @@ const DashboardPage: React.FC = () => {
                 renderItem={renderFeedItem}
                 keyExtractor={(item) => item.id}
                 contentContainerStyle={styles.classesList}
-                ListEmptyComponent={<ThemedText>No classes available</ThemedText>}
+                ListEmptyComponent={<ThemedText>No Feed!</ThemedText>}
             />
         </ThemedView>
     );
@@ -135,7 +126,7 @@ const DashboardPage: React.FC = () => {
                     ListFooterComponent={() => (
                         <>
                             {renderClassSectionHeader(
-                                "Today's Classes",
+                                "Today's Lectures",
                                 <Ionicons name="calendar-outline" size={20} />
                             )}
                             {renderFeedSectionHeader(

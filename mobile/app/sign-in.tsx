@@ -25,12 +25,12 @@ export default function SignIn() {
 
         const response = await signIn(username, password);
 
-        if (response) {
+        if (response.status == 200) {
             Alert.alert('Sign In Successful', 'You have successfully signed in!');
             setLoggedIn(true);
             router.push("(tabs)");
 
-        } else {
+        } else if (response.status == 401) {
             Alert.alert('Sign In Failed', 'Please check your credentials and try again.');
         }
     };

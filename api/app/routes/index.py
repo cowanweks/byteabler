@@ -38,6 +38,8 @@ def sign_in():
 
             return jsonify("Incorrect username or password!"), 401
 
+        print(user_form.errors)
+
         return jsonify(user_form.errors), 400
 
     except SQLAlchemyError as ex:
