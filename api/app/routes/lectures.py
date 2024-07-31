@@ -3,7 +3,6 @@ from flask import Blueprint, request, jsonify, session
 from app.models import db, Lecture, Class
 from app.forms.lecture import LectureRegForm
 import datetime
-import requests
 
 # Class blueprint
 lecture_route = Blueprint("lecture_route", __name__, url_prefix="/api/v1/lectures")
