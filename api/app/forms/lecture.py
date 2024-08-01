@@ -35,7 +35,10 @@ class LectureRegForm(Form):
     lecturer = StringField("Lecturer", validators=[validators.DataRequired("Please input the Lecturer!")])
     weekDay = StringField("Weekday", validators=[validators.DataRequired("Please input the Week Day!"),
                                                  validate_weekday])
-    time = StringField("Time", validators=[validators.DataRequired("Please input the Time!"), validate_time])
+    startTime = StringField("Start Time", validators=[validators.DataRequired("Please input the Start Time!"),
+                                                      validate_time])
+    endTime = StringField("End Time", validators=[validators.DataRequired("Please input the End Time!"),
+                                                  validate_time])
 
 
 class LectureUpdateForm(Form):

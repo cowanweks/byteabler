@@ -78,8 +78,10 @@ def new():
         if not form.validate():
             return jsonify(form.errors), 400
 
-        lecture = Lecture(lecture_id=str(uuid.uuid4()), class_id=form.classId.data, unit_code=form.unitCode.data,
-                          lecturer=form.lecturer.data, week_day=form.weekDay.data, time=form.time.data)
+        lecture = Lecture(lecture_id=str(uuid.uuid4()),
+                          class_id=form.classId.data, unit_code=form.unitCode.data,
+                          lecturer=form.lecturer.data, week_day=form.weekDay.data,
+                          start_time=form.startTime.data, end_time=form.endTime.data)
 
         db.session.add(lecture)
         db.session.commit()
