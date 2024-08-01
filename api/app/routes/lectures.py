@@ -41,6 +41,9 @@ def get_lectures_by_user_route():
             lectures = (db.session.query(Lecture).filter_by(lecturer=staff_no)
                         .order_by(Lecture.lecture_id).all())
 
+        if len(lectures) < 1:
+            return jsonify([]), 200
+
         serialized_lectures = [_lecture.serialize() for _lecture in lectures]
         return jsonify(serialized_lectures), 200
 
@@ -58,6 +61,9 @@ def get_lectures_by_user_route():
 
         else:
             lectures = (db.session.query(Lecture).filter_by(class_id=class_id).order_by(Lecture.lecture_id).all())
+
+        if len(lectures) < 1:
+            return jsonify([]), 200
 
         serialized_lectures = [_lecture.serialize() for _lecture in lectures]
         return jsonify(serialized_lectures), 200

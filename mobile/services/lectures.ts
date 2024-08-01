@@ -11,11 +11,11 @@ export async function getLectures(options: {
 
   let template: string = ``;
 
-  if (options.role == "Lecturer") {
+  if (options.role === "Lecturer") {
     template = template.concat(`?staffNo=${options.user}`);
   }
 
-  if (options.role == "ClassRep") {
+  if (options.role === "ClassRep") {
     template = template.concat(`?regNo=${options.user}`);
   }
 
@@ -23,12 +23,14 @@ export async function getLectures(options: {
     template = template.concat(`&day=${options.day}`);
   }
 
+  console.log(template);
+
   const response = await fetch(`${API_URL}/v1/lectures${template}`, {
     method: "GET",
   });
 
   if (response.status != 200) {
-    throw Error("HTTP ERROR: " + response.body);
+    return [];
   }
 
   const data: Array<Lecture> = await response.json();

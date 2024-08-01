@@ -21,7 +21,9 @@ const DashboardPage: React.FC = () => {
 
         const fetchLectures = async () => {
 
-            const lectures = await getLectures({ role: role, user: user, day: 'today' });
+            console.log(user, role)
+
+            const lectures = await getLectures({ role: role!, user: user!, day: 'today' });
 
             setLectures(lectures)
         }
