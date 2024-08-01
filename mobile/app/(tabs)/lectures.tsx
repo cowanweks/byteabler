@@ -39,7 +39,7 @@ export default function ClassPage() {
                 alignItems: 'center',
                 columnGap: 8
             }}>
-                <Ionicons name="book-outline" size={18} />
+                <Ionicons color="green" name="book-outline" size={18} />
                 <ThemedText style={styles.className}>{item.unitCode}</ThemedText>
                 <ThemedText style={styles.className}>{item.unitName}</ThemedText>
             </View>
@@ -49,8 +49,9 @@ export default function ClassPage() {
                 alignItems: 'center',
                 columnGap: 8
             }}>
-                <Ionicons name="time-outline" size={18} />
+                <Ionicons color="blue" name="time-outline" size={18} />
                 <ThemedText style={styles.classTime}>{item.time}</ThemedText>
+                <ThemedText style={styles.weekDay}>{item.weekDay}</ThemedText>
             </View>
         </View>
     );
@@ -100,10 +101,13 @@ const styles = StyleSheet.create({
     className: {
         fontSize: 16,
         color: '#000',
-        fontWeight: 'bold',
+        fontWeight: 'semibold',
     },
     classTime: {
         fontSize: 14,
         color: '#666',
     },
+    weekDay: {
+        color: 'tomato'
+    }
 });

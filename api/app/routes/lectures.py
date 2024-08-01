@@ -48,10 +48,11 @@ def get_lectures_by_user_route():
         #
         class_id = db.session.query(Class.class_id).filter_by(class_rep=reg_no).scalar()
 
-        if not class_id:
+        if class_id is None:
             return jsonify("Class {} not found".format(class_id))
 
         if (day is not None) and (day == 'today'):
+            print(class_id, weekday)
             lectures = (db.session.query(Lecture).filter_by(class_id=class_id, week_day=weekday)
                         .order_by(Lecture.lecture_id).all())
 

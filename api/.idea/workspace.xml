@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40c32eda-920d-4f4c-9286-be3ae7f08a7c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/app/forms/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/forms/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/routes/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/Department.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/Department.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/Setting.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/Setting.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/pages/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/pages/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/classes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/classes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/classreps.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/classreps.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/staffs.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/staffs.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/units.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/units.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/services/users.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/services/users.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../desktop/ui/src/types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../desktop/ui/src/types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/routes/lectures.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/routes/lectures.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sessions/2029240f6d1128be89ddc32729463129" beforeDir="false" afterPath="$PROJECT_DIR$/sessions/2029240f6d1128be89ddc32729463129" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../mobile/app/(tabs)/lectures.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../mobile/app/(tabs)/lectures.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
