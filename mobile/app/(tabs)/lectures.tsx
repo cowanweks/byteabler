@@ -25,7 +25,7 @@ export default function ClassPage() {
 
         fetchLectures();
 
-    }, []);
+    }, [lectures, role, user]);
 
     if (!loggedIn) {
         return <SignIn />; // Render sign-in screen if not logged in
@@ -50,7 +50,8 @@ export default function ClassPage() {
                 columnGap: 8
             }}>
                 <Ionicons color="blue" name="time-outline" size={18} />
-                <ThemedText style={styles.classTime}>{item.time}</ThemedText>
+                <ThemedText style={styles.classTime}>{item.startTime}</ThemedText> - 
+                <ThemedText style={styles.classTime}>{item.endTime}</ThemedText>
                 <ThemedText style={styles.weekDay}>{item.weekDay}</ThemedText>
                 <ThemedText style={styles.lecName}>{item.lecName}</ThemedText>
             </View>

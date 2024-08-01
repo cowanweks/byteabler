@@ -1,29 +1,27 @@
 import { API_URL, Lecture, Response } from "@/types";
 
 export async function getLectures(options: {
-  user: string;
-  role: string;
+  user: string | undefined;
+  role: string | undefined;
   day: string | undefined;
 }): Promise<Array<Lecture>> {
   /**
    *
    */
 
-  let template: string = ``;
+  let template: string = `?`;
 
   if (options.role === "Lecturer") {
-    template = template.concat(`?staffNo=${options.user}`);
+    template = template.concat(`staffNo=${options.user}`);
   }
 
   if (options.role === "ClassRep") {
-    template = template.concat(`?regNo=${options.user}`);
+    template = template.concat(`regNo=${options.user}`);
   }
 
   if (options.day != undefined) {
     template = template.concat(`&day=${options.day}`);
   }
-
-  console.log(template);
 
   const response = await fetch(`${API_URL}/v1/lectures${template}`, {
     method: "GET",

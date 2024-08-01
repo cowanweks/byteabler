@@ -21,8 +21,6 @@ const DashboardPage: React.FC = () => {
 
         const fetchLectures = async () => {
 
-            console.log(user, role)
-
             const lectures = await getLectures({ role: role!, user: user!, day: 'today' });
 
             setLectures(lectures)
@@ -57,7 +55,8 @@ const DashboardPage: React.FC = () => {
                     columnGap: 8
                 }}>
                     <Ionicons name="time-outline" size={18} />
-                    <ThemedText style={styles.classTime}>{item.time}</ThemedText>
+                    <ThemedText style={styles.classTime}>{item.startTime}</ThemedText> - 
+                    <ThemedText style={styles.classTime}>{item.endTime}</ThemedText>
                     <ThemedText style={styles.lecName}>{item.lecName}</ThemedText>
                 </View>
             </View>

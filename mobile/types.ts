@@ -60,7 +60,8 @@ export type Lecture = {
   lecturer: string;
   lecName?: string;
   weekDay: string;
-  time: string;
+  startTime: string;
+  endTime: string;
 };
 
 export type Feed = {

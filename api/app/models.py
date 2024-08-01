@@ -157,7 +157,8 @@ class Lecture(db.Model):
     unit_code = mapped_column(String, nullable=False)
     lecturer = mapped_column(String, ForeignKey("staffs.staff_no"), nullable=False)
     week_day = mapped_column(String, nullable=False)
-    time = mapped_column(String, nullable=False)
+    start_time = mapped_column(String, nullable=False)
+    end_time = mapped_column(String, nullable=False)
     reg_date = mapped_column(DateTime(timezone=True), default=datetime.datetime.now())
     updated_at = mapped_column(DateTime(timezone=True), default=datetime.datetime.now(),
                                onupdate=datetime.datetime.now())
@@ -174,5 +175,6 @@ class Lecture(db.Model):
             "lecturer": self.lecturer,
             "lecName": db.session.query(Staff.first_name).filter_by(staff_no=self.lecturer).scalar(),
             "weekDay": self.week_day,
-            "time": self.time
+            "startTime": self.start_time,
+            "endTime": self.end_time
         }
