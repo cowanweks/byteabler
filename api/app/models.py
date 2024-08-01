@@ -172,6 +172,7 @@ class Lecture(db.Model):
             "unitCode": self.unit_code,
             "unitName": db.session.query(Unit.unit_name).filter_by(unit_code=self.unit_code).scalar(),
             "lecturer": self.lecturer,
+            "lecName": db.session.query(Staff.first_name).filter_by(staff_no=self.lecturer).scalar(),
             "weekDay": self.week_day,
             "time": self.time
         }

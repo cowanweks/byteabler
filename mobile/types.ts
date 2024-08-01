@@ -58,6 +58,7 @@ export type Lecture = {
   unitCode: string;
   unitName: string;
   lecturer: string;
+  lecName?: string;
   weekDay: string;
   time: string;
 };

@@ -52,6 +52,7 @@ export default function ClassPage() {
                 <Ionicons color="blue" name="time-outline" size={18} />
                 <ThemedText style={styles.classTime}>{item.time}</ThemedText>
                 <ThemedText style={styles.weekDay}>{item.weekDay}</ThemedText>
+                <ThemedText style={styles.lecName}>{item.lecName}</ThemedText>
             </View>
         </View>
     );
@@ -104,6 +105,10 @@ const styles = StyleSheet.create({
         fontWeight: 'semibold',
     },
     classTime: {
+        fontSize: 14,
+        color: '#666',
+    },
+    lecName: {
         fontSize: 14,
         color: '#666',
     },

@@ -56,6 +56,7 @@ const DashboardPage: React.FC = () => {
                 }}>
                     <Ionicons name="time-outline" size={18} />
                     <ThemedText style={styles.classTime}>{item.time}</ThemedText>
+                    <ThemedText style={styles.lecName}>{item.lecName}</ThemedText>
                 </View>
             </View>
         </View>
@@ -201,6 +202,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     classTime: {
+        fontSize: 16,
+        color: '#666',
+    },
+    lecName: {
         fontSize: 16,
         color: '#666',
     },
